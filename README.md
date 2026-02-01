@@ -1,4 +1,3 @@
-# Agente Inteligente LLM --- Residencia
 # ConAIgua - Sistema de Consultas Meteorológicas con LLM
 
 <div align="center">
