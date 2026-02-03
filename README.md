@@ -261,3 +261,10 @@ Ver carpeta `/docs/architecture/` para diagramas completos.
 - SIEM integration
 - Alertas de seguridad
 - Compliance: GDPR, SOC2
+
+---
+
+## License
+
+Copyright © 2026 Chris6264  
+Licensed under the Apache License, Version 2.0.
