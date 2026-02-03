@@ -40,13 +40,13 @@ Los datos meteorológicos históricos suelen estar en formatos poco accesibles (
             │   (Users/     │       │  (Chat      │       │  (Vector    │
             │   Sessions)   │       │  History)   │       │    DB)      │
             └───────────────┘       └─────────────┘       └─────────────┘
-                                            │
-                                            ▼
-                                    ┌─────────────┐
-                                    │ LLM Provider│
-                                    │ (OpenAI/    │
-                                    │ Anthropic)  │
-                                    └─────────────┘
+                                                                │
+                                                                ▼
+                                                          ┌─────────────┐
+                                                          │ LLM Provider│
+                                                          │ (OpenAI/    │
+                                                          │ Anthropic)  │
+                                                          └─────────────┘
 ```
 
 ---
