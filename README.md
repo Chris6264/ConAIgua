@@ -5,7 +5,7 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![Rust](https://img.shields.io/badge/Rust-1.75+-orange.svg)
 ![Svelte](https://img.shields.io/badge/Svelte-4.0+-red.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
+![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)
 ![Status](https://img.shields.io/badge/status-en%20desarrollo-yellow.svg)
 
 Chatbot inteligente que permite consultar información meteorológica histórica de CONAGUA mediante procesamiento de lenguaje natural.
