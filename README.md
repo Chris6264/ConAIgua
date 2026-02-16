@@ -44,8 +44,8 @@ Los datos meteorológicos históricos suelen estar en formatos poco accesibles (
                                                                 ▼
                                                           ┌─────────────┐
                                                           │ LLM Provider│
-                                                          │ (OpenAI/    │
-                                                          │ Anthropic)  │
+                                                          │ (ConAIgua)  │
+                                                          │             │
                                                           └─────────────┘
 ```
 
@@ -143,7 +143,7 @@ El proyecto sigue los principios de **Arquitectura Hexagonal** (también conocid
 │  │                                                      │   │
 │  │  ┌──────────────────┐  ┌──────────────────────────┐  │   │
 │  │  │  LLM HTTP Client │  │  CONAGUA DataFrame       │  │   │
-│  │  │  (OpenAI/Claude) │  │  (Polars/Pandas)         │  │   │
+│  │  │  (ConAIgua)      │  │  (Polars/Pandas)         │  │   │
 │  │  └──────────────────┘  └──────────────────────────┘  │   │
 │  └──────────────────────────────────────────────────────┘   │
 │                                                             │
