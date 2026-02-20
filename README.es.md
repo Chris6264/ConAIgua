@@ -9,7 +9,7 @@
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)
 ![Status](https://img.shields.io/badge/status-en%20desarrollo-yellow.svg)
 
-[English Version](README.md)
+[English Version](README.en.md)
 
 </div>
 
@@ -33,7 +33,7 @@ Los datos hidrometeorológicos históricos suelen estar en formatos poco accesib
 
 ### Arquitectura de Alto Nivel
 
-```
+```text
 ┌─────────────┐  HTTPS/WSS  ┌──────────────┐
 │  Frontend   │ ◄──────────►│ API Backend  │
 │  (React +   │             │    (Rust)    │
@@ -73,22 +73,22 @@ A diferencia de sistemas que utilizan modelos genéricos (OpenAI, Anthropic, Met
 
 El dataset proviene de la **Base de Datos Climatológica Nacional** (CNA-SMN-CG-GMC-SMAA-CLIMATOLOGIA), con datos suministrados por las Oficinas Regionales de CONAGUA. Cada archivo de estación tiene el siguiente formato:
 
-```
+```text
 ESTACION  : 25164
 NOMBRE    : ALTO DE CULIACANCITO
 ESTADO    : SINALOA
 MUNICIPIO : CULIACAN
-SITUACIÓN : SUSPENDIDA
+SITUACION : SUSPENDIDA
 ORGANISMO : CONAGUA-DGE
 CVE-OMM   : Nulo
-LATITUD   : 024.807°
-LONGITUD  : -107.555°
+LATITUD   : 024.807
+LONGITUD  : -107.555
 ALTITUD   : 24 msnm
 
 EMISION   : 06/04/2020
 
            PRECIP  EVAP   TMAX   TMIN
-  FECHA     (MM)   (MM)   (°C)   (°C)
+  FECHA     (MM)   (MM)   (C)    (C)
 01/01/1978  0     Nulo    24     12
 02/01/1978  0     Nulo    26     16
 03/01/1978  0     Nulo    30     11
@@ -125,67 +125,67 @@ EMISION   : 06/04/2020
 
 ### Pipeline de Entrenamiento del LLM
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────┐
 │              PIPELINE DE ENTRENAMIENTO ConAIgua LLM             │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │  1. INGESTA DE DATOS                                            │
 │  ┌─────────────────────────────────────────────────────────┐    │
-│  │  Dataset CONAGUA (archivos TXT planos por estación)     │    │
-│  │  • Metadatos: clave, nombre, estado, municipio,         │    │
-│  │    situación, organismo, coordenadas, altitud           │    │
-│  │  • Series diarias: PRECIP, EVAP, TMAX, TMIN             │    │
-│  │  • Cobertura histórica desde los años 1920 hasta 2020   │    │
-│  │  • Miles de estaciones en toda la República Mexicana    │    │
+│  │  Dataset CONAGUA (archivos TXT planos por estacion)     │    │
+│  │  - Metadatos: clave, nombre, estado, municipio,         │    │
+│  │    situacion, organismo, coordenadas, altitud           │    │
+│  │  - Series diarias: PRECIP, EVAP, TMAX, TMIN             │    │
+│  │  - Cobertura historica desde los anos 1920 hasta 2020   │    │
+│  │  - Miles de estaciones en toda la Republica Mexicana    │    │
 │  └──────────────────────────┬──────────────────────────────┘    │
 │                             │                                   │
 │  2. PREPROCESAMIENTO                                            │
 │  ┌──────────────────────────▼──────────────────────────────┐    │
-│  │  Pipeline de Limpieza y Normalización (Polars/Pandas)   │    │
-│  │  • Parseo del formato TXT propietario de CONAGUA        │    │
-│  │  • Tratamiento del literal "Nulo" → NaN                 │    │
-│  │  • Interpolación temporal de valores faltantes          │    │
-│  │  • Detección y corrección de outliers climatológicos    │    │
-│  │  • Normalización de coordenadas y altitudes             │    │
-│  │  • Conversión a formato tabular estructurado            │    │
+│  │  Pipeline de Limpieza y Normalizacion (Polars/Pandas)   │    │
+│  │  - Parseo del formato TXT propietario de CONAGUA        │    │
+│  │  - Tratamiento del literal "Nulo" -> NaN                │    │
+│  │  - Interpolacion temporal de valores faltantes          │    │  
+│  │  - Deteccion y correccion de outliers climatologicos    │    │
+│  │  - Normalizacion de coordenadas y altitudes             │    │
+│  │  - Conversion a formato tabular estructurado            │    │
 │  └──────────────────────────┬──────────────────────────────┘    │
 │                             │                                   │
-│  3. CONSTRUCCIÓN DEL CORPUS                                     │
+│  3. CONSTRUCCION DEL CORPUS                                     │
 │  ┌──────────────────────────▼──────────────────────────────┐    │
-│  │  Generación de Corpus de Entrenamiento                  │    │
-│  │  • Pares (pregunta, respuesta) sintéticos               │    │
-│  │    ej: "TMAX en estación 25164 el 09/01/1978?" → "31°C" │    │
-│  │  • Resúmenes mensuales y anuales por estación           │    │
-│  │  • Contexto geográfico enriquecido (estado, municipio)  │    │
-│  │  • Vocabulario de terminología CONAGUA y climatológica  │    │
+│  │  Generacion de Corpus de Entrenamiento                  │    │
+│  │  - Pares (pregunta, respuesta) sinteticos               │    │
+│  │    ej: "TMAX estacion 25164 el 09/01/1978?" -> "31C"    │    │
+│  │  - Resumenes mensuales y anuales por estacion           │    │
+│  │  - Contexto geografico enriquecido (estado, municipio)  │    │
+│  │  - Vocabulario de terminologia CONAGUA y climatologica  │    │
 │  └──────────────────────────┬──────────────────────────────┘    │
 │                             │                                   │
 │  4. ENTRENAMIENTO DEL MODELO                                    │
 │  ┌──────────────────────────▼──────────────────────────────┐    │
 │  │  Arquitectura Transformer (desde cero)                  │    │
-│  │  • Pre-entrenamiento: Modelado de lenguaje causal (CLM) │    │
-│  │  • Fine-tuning supervisado: pares Q&A climatológicos    │    │ 
-│  │  • RLHF opcional: feedback humano sobre respuestas      │    │
-│  │  • Framework: PyTorch + HuggingFace Trainer (interno)   │    │ 
+│  │  - Pre-entrenamiento: Modelado de lenguaje causal (CLM) │    │
+│  │  - Fine-tuning supervisado: pares Q&A climatologicos    │    │
+│  │  - RLHF opcional: feedback humano sobre respuestas      │    │
+│  │  - Framework: PyTorch + HuggingFace Trainer (interno)   │    │
 │  └──────────────────────────┬──────────────────────────────┘    │
 │                             │                                   │
-│  5. EVALUACIÓN Y VALIDACIÓN                                     │
+│  5. EVALUACION Y VALIDACION                                     │
 │  ┌──────────────────────────▼──────────────────────────────┐    │
-│  │  Métricas de Calidad                                    │    │
-│  │  • Perplexity sobre corpus de validación CONAGUA        │    │
-│  │  • BLEU / ROUGE en respuestas de referencia             │    │
-│  │  • Evaluación humana de precisión climatológica         │    │
-│  │  • Benchmarks de latencia y throughput                  │    │
+│  │  Metricas de Calidad                                    │    │
+│  │  - Perplexity sobre corpus de validacion CONAGUA        │    │
+│  │  - BLEU / ROUGE en respuestas de referencia             │    │
+│  │  - Evaluacion humana de precision climatologica         │    │
+│  │  - Benchmarks de latencia y throughput                  │    │
 │  └──────────────────────────┬──────────────────────────────┘    │
 │                             │                                   │
 │  6. DESPLIEGUE                                                  │
 │  ┌──────────────────────────▼──────────────────────────────┐    │
 │  │  Serving del Modelo                                     │    │
-│  │  • Exportación a ONNX o TorchScript                     │    │
-│  │  • Quantización INT8/FP16 para eficiencia               │    │
-│  │  • Serving via API REST interna (Rust ↔ Python bridge)  │    │
-│  │  • Versionado de modelos con MLflow                     │    │
+│  │  - Exportacion a ONNX o TorchScript                     │    │
+│  │  - Quantizacion INT8/FP16 para eficiencia               │    │
+│  │  - Serving via API REST interna (Rust - Python bridge)  │    │
+│  │  - Versionado de modelos con MLflow                     │    │
 │  └─────────────────────────────────────────────────────────┘    │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
@@ -193,7 +193,7 @@ EMISION   : 06/04/2020
 
 ### Pipelines de Datos
 
-```
+```text
 ┌──────────────────────────────────────────────────────────────┐
 │                    PIPELINES DE DATOS                        │
 ├──────────────────────────────────────────────────────────────┤
@@ -271,7 +271,7 @@ El proyecto sigue los principios de **Arquitectura Hexagonal** (también conocid
 - **Flexibilidad**: Cambio de tecnologías sin afectar la lógica core
 - **Mantenibilidad**: Código organizado y escalable
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │                   HEXAGONAL ARCHITECTURE                    │
 ├─────────────────────────────────────────────────────────────┤
@@ -285,33 +285,33 @@ El proyecto sigue los principios de **Arquitectura Hexagonal** (también conocid
 │  │   └──────┬──────┘          └──────┬──────┘           │   │
 │  └─────────┼────────────────────────│───────────────────┘   │
 │            │                        │                       │
-│            │      PUERTOS PRIMARIOS (Entrada)               │
+│            │   PUERTOS PRIMARIOS (Entrada)                  │
 │            ▼                        ▼                       │
 │  ┌──────────────────────────────────────────────────────┐   │
-│  │                   NÚCLEO DE DOMINIO                  │   │
+│  │                  NUCLEO DE DOMINIO                   │   │
 │  │                                                      │   │
 │  │  ┌────────────────────────────────────────────────┐  │   │
-│  │  │     Servicios de Aplicación (Casos de Uso)     │  │   │  
-│  │  │       • ChatOrchestrator                       │  │   │
-│  │  │       • AuthenticationService                  │  │   │
-│  │  │       • SessionManager                         │  │   │ 
+│  │  │   Servicios de Aplicacion (Casos de Uso)       │  │   │
+│  │  │   - ChatOrchestrator                           │  │   │
+│  │  │   - AuthenticationService                      │  │   │
+│  │  │   - SessionManager                             │  │   │
+│  │  └────────────────────────────────────────────────┘  │   │
+│  │                                                      │   │ 
+│  │  ┌────────────────────────────────────────────────┐  │   │
+│  │  │   Logica de Dominio (Reglas de Negocio)        │  │   │
+│  │  │   - IntentParser                               │  │   │
+│  │  │   - RAGService                                 │  │   │
+│  │  │   - ConAIguaLLMService (modelo propio)         │  │   │
 │  │  └────────────────────────────────────────────────┘  │   │
 │  │                                                      │   │
 │  │  ┌────────────────────────────────────────────────┐  │   │
-│  │  │      Lógica de Dominio (Reglas de Negocio)     │  │   │
-│  │  │        • IntentParser                          │  │   │ 
-│  │  │        • RAGService                            │  │   │
-│  │  │        • ConAIguaLLMService (modelo propio)    │  │   │
-│  │  └────────────────────────────────────────────────┘  │   │
-│  │                                                      │   │
-│  │  ┌────────────────────────────────────────────────┐  │   │
-│  │  │        Entidades de Dominio (Modelos)          │  │   │
-│  │  │        • User, Session, Message                │  │   │
-│  │  │        • ChatContext, EmbeddingVector          │  │   │
+│  │  │   Entidades de Dominio (Modelos)               │  │   │
+│  │  │   - User, Session, Message                     │  │   │
+│  │  │   - ChatContext, EmbeddingVector               │  │   │
 │  │  └────────────────────────────────────────────────┘  │   │
 │  └───────────────────────┬──────────────────────────────┘   │
 │                          │                                  │
-│            PUERTOS SECUNDARIOS (Salida)                     │
+│          PUERTOS SECUNDARIOS (Salida)                       │
 │                          ▼                                  │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │              ADAPTADORES (Infraestructura)           │   │
@@ -326,7 +326,7 @@ El proyecto sigue los principios de **Arquitectura Hexagonal** (también conocid
 │  │  │ (modelo propio,      │  │ (Polars/Pandas)    │    │   │
 │  │  │  servido localmente) │  │                    │    │   │
 │  │  └──────────────────────┘  └────────────────────┘    │   │
-│  └──────────────────────────────────────────────────────┘   │
+│  └──────────────────────────────────────────────────────┘   │ 
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -343,30 +343,30 @@ El proyecto sigue los principios de **Arquitectura Hexagonal** (también conocid
 
 El sistema implementa **microsegmentación** siguiendo el modelo **Zero Trust**:
 
-```
+```text
 ┌───────────────────────────────────────────────────────────┐
-│  SEGMENTO 1: Autenticación                                │
-│  • Auth Service, Session Manager                          │
-│  • Acceso: PostgreSQL:5432, Redis:6379                    │
-│  • Bloqueado: MongoDB, Qdrant, LLM Service, Internet      │
+│  SEGMENTO 1: Autenticacion                                │
+│  - Auth Service, Session Manager                          │
+│  - Acceso: PostgreSQL:5432, Redis:6379                    │
+│  - Bloqueado: MongoDB, Qdrant, LLM Service, Internet      │
 └───────────────────────────────────────────────────────────┘
 ┌───────────────────────────────────────────────────────────┐
 │  SEGMENTO 2: Backend Services                             │
-│  • Chat Orchestrator, RAG, ConAIgua LLM Service           │
-│  • Acceso: MongoDB:27017, Qdrant:6333, LLM Service:8080   │
-│  • Bloqueado: PostgreSQL (solo Auth puede), Internet      │
+│  - Chat Orchestrator, RAG, ConAIgua LLM Service           │
+│  - Acceso: MongoDB:27017, Qdrant:6333, LLM Service:8080   │
+│  - Bloqueado: PostgreSQL (solo Auth puede), Internet      │
 └───────────────────────────────────────────────────────────┘
 ┌───────────────────────────────────────────────────────────┐
 │  SEGMENTO 3: LLM Inference                                │
-│  • ConAIgua Model Server (PyTorch / ONNX Runtime)         │
-│  • Acceso: Solo desde Backend Services                    │
-│  • Sin acceso a Internet ni a bases de datos              │
+│  - ConAIgua Model Server (PyTorch / ONNX Runtime)         │
+│  - Acceso: Solo desde Backend Services                    │
+│  - Sin acceso a Internet ni a bases de datos              │
 └───────────────────────────────────────────────────────────┘
 ┌───────────────────────────────────────────────────────────┐
 │  SEGMENTO 4: Capa de Datos                                │
-│  • PostgreSQL, MongoDB, Qdrant, Redis                     │
-│  • Firewall interno con IP whitelisting                   │
-│  • Acceso: Solo servicios autorizados por puerto          │
+│  - PostgreSQL, MongoDB, Qdrant, Redis                     │
+│  - Firewall interno con IP whitelisting                   │
+│  - Acceso: Solo servicios autorizados por puerto          │
 └───────────────────────────────────────────────────────────┘
 ```
 
@@ -401,7 +401,7 @@ Ver carpeta `/docs/architecture/` para diagramas completos.
 | **Backend API** | Rust (Axum) | Async, alto rendimiento |
 | **LLM** | PyTorch + Transformer propio | Entrenado desde cero con CONAGUA |
 | **RAG** | Qdrant + embeddings propios | Vectores del modelo ConAIgua |
-| **Data Pipeline** | Polars / Pandas | ETL del dataset CONAGUA (TXT → tabular) |
+| **Data Pipeline** | Polars / Pandas | ETL del dataset CONAGUA (TXT a tabular) |
 | **Model Serving** | ONNX Runtime / TorchServe | Inferencia optimizada local |
 | **BD Relacional** | PostgreSQL | Usuarios y sesiones |
 | **BD Documental** | MongoDB | Historial de chat |
