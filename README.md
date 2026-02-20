@@ -19,17 +19,17 @@ Intelligent chatbot for querying historical hydrometeorological data from CONAGU
 
 **ConAIgua** is a hydrometeorological data query system that uses a **custom Large Language Model (LLM)**, trained entirely from scratch on historical data from CONAGUA (Comisión Nacional del Agua de México), combined with **Retrieval-Augmented Generation (RAG)** to deliver precise and contextual answers in natural language.
 
-> **Important**: The language model used in ConAIgua is **not an external or pre-existing LLM** (it is not GPT, Claude, LLaMA, or any third-party model). It is a model **designed, trained, and optimized from scratch** using exclusively the CONAGUA dataset, meteorological data processing pipelines, and custom Transformer architectures. This ensures the model has deep, specialized knowledge of the Mexican hydrometeorological domain.
+> **Important**: The language model used in ConAIgua is **not an external or pre-existing LLM** (it is not GPT, Claude, LLaMA, or any third-party model). It is a model **designed, trained, and optimized from scratch** using exclusively the CONAGUA dataset, hydrometeorological data processing pipelines, and custom Transformer architectures. This ensures the model has deep, specialized knowledge of the Mexican climatological domain.
 
 ### What problem does it solve?
 
-Historical meteorological data is often stored in inaccessible formats (CSVs, complex databases). This chatbot enables:
+Historical hydrometeorological data is often stored in inaccessible formats (plain TXT files, CSVs, complex databases). This chatbot enables:
 
-- **Natural language queries**: "What was the temperature in Culiacán last week?"
-- **Meteorological data analysis**: Temperature, precipitation, humidity, wind, atmospheric pressure
+- **Natural language queries**: "What was the maximum temperature in Culiacán in January 1978?"
+- **Climatological data analysis**: Precipitation, evaporation, daily maximum and minimum temperature
 - **Semantic search**: RAG over the CONAGUA dataset for precise, contextual responses
 - **Real-time responses**: Interactive web interface with response streaming
-- **Specialized domain**: The LLM natively understands Mexican meteorological terminology, stations, and climate patterns
+- **Specialized domain**: The LLM natively understands CONAGUA station structures, identifiers, Mexican states and municipalities
 
 ### High-Level Architecture
 
@@ -62,12 +62,66 @@ Historical meteorological data is often stored in inaccessible formats (CSVs, co
 
 ### Why a custom LLM?
 
-Unlike systems that rely on generic models (OpenAI, Anthropic, Meta, etc.), ConAIgua builds its own language model trained exclusively on Mexican meteorological data. This enables:
+Unlike systems that rely on generic models (OpenAI, Anthropic, Meta, etc.), ConAIgua builds its own language model trained exclusively on Mexican hydrometeorological data. This enables:
 
-- **Full domain specialization**: The model natively understands CONAGUA stations, their identifiers, climate regions, and Mexico's historical weather patterns
+- **Full domain specialization**: The model natively understands CONAGUA stations, their keys, responsible agencies, Mexican states and municipalities
 - **Data privacy and sovereignty**: No information is sent to external services
 - **Complete model control**: Fine-tuning, versioning, and deployment fully under our control
 - **No third-party dependency**: No API costs and no risk of service discontinuation
+
+### Real CONAGUA Dataset Format
+
+The dataset comes from the **National Climatological Database** (CNA-SMN-CG-GMC-SMAA-CLIMATOLOGIA), with data provided by CONAGUA's Regional Offices. Each station file has the following format:
+
+```
+ESTACION  : 25164
+NOMBRE    : ALTO DE CULIACANCITO
+ESTADO    : SINALOA
+MUNICIPIO : CULIACAN
+SITUACIÓN : SUSPENDIDA
+ORGANISMO : CONAGUA-DGE
+CVE-OMM   : Nulo
+LATITUD   : 024.807°
+LONGITUD  : -107.555°
+ALTITUD   : 24 msnm
+
+EMISION   : 06/04/2020
+
+           PRECIP  EVAP   TMAX   TMIN
+  FECHA     (MM)   (MM)   (°C)   (°C)
+01/01/1978  0     Nulo    24     12
+02/01/1978  0     Nulo    26     16
+03/01/1978  0     Nulo    30     11
+...
+```
+
+### CONAGUA Dataset Structure
+
+**Station Metadata:**
+
+| Field | Description | Example |
+|---|---|---|
+| `ESTACION` | Unique station key | `25164` |
+| `NOMBRE` | Station name | `ALTO DE CULIACANCITO` |
+| `ESTADO` | Mexican state | `SINALOA` |
+| `MUNICIPIO` | Station municipality | `CULIACAN` |
+| `SITUACIÓN` | Operational status | `SUSPENDIDA` / `ACTIVA` |
+| `ORGANISMO` | Responsible agency | `CONAGUA-DGE` |
+| `CVE-OMM` | International WMO key | `Nulo` or numeric code |
+| `LATITUD` | Geographic coordinate | `024.807°` |
+| `LONGITUD` | Geographic coordinate | `-107.555°` |
+| `ALTITUD` | Meters above sea level | `24 msnm` |
+| `EMISION` | Report emission date | `06/04/2020` |
+
+**Daily Records:**
+
+| Field | Description | Unit |
+|---|---|---|
+| `FECHA` | Observation date | `DD/MM/YYYY` | 
+| `PRECIP` | Accumulated precipitation | mm | 
+| `EVAP` | Evaporation | mm | 
+| `TMAX` | Daily maximum temperature | °C | 
+| `TMIN` | Daily minimum temperature | °C |
 
 ### LLM Training Pipeline
 
@@ -78,47 +132,50 @@ Unlike systems that rely on generic models (OpenAI, Anthropic, Meta, etc.), ConA
 │                                                                 │
 │  1. DATA INGESTION                                              │
 │  ┌─────────────────────────────────────────────────────────┐    │
-│  │  CONAGUA Dataset (CSV/Parquet)                          │    │
-│  │  • Meteorological stations (all of Mexico)              │    │
-│  │  • Historical series: temperature, precipitation,       │    │
-│  │    humidity, wind, atmospheric pressure                 │    │
-│  │  • Metadata: coordinates, altitude, state, municipality │    │
-│  └──────────────────────────┬──────────────────────────────┘    │
+│  │  CONAGUA Dataset (plain TXT files per station)          │    │
+│  │  • Metadata: key, name, state, municipality,            │    │
+│  │    status, agency, coordinates, altitude                │    │
+│  │  • Daily series: PRECIP, EVAP, TMAX, TMIN               │    │
+│  │  • Historical coverage from 1920s to 2020               │    │
+│  │  • Thousands of stations across all of Mexico           │    │
+│  └──────────────────────────┬──────────────────────────────┘    │ 
 │                             │                                   │
 │  2. PREPROCESSING                                               │
 │  ┌──────────────────────────▼──────────────────────────────┐    │
 │  │  Cleaning & Normalization Pipeline (Polars/Pandas)      │    │
-│  │  • Null value handling and interpolation                │    │ 
-│  │  • Unit and scale normalization                         │    │
-│  │  • Outlier detection and correction                     │    │
-│  │  • Time series tokenization                             │    │
-│  │  • Conversion to structured text format                 │    │
+│  │  • Parsing of CONAGUA's proprietary TXT format          │    │
+│  │  • Handling of literal "Nulo" string → NaN              │    │ 
+│  │  • Temporal interpolation of missing values             │    │
+│  │  • Climatological outlier detection and correction      │    │
+│  │  • Coordinate and altitude normalization                │    │
+│  │  • Conversion to structured tabular format              │    │ 
 │  └──────────────────────────┬──────────────────────────────┘    │
 │                             │                                   │
 │  3. CORPUS BUILDING                                             │
 │  ┌──────────────────────────▼──────────────────────────────┐    │
 │  │  Training Corpus Generation                             │    │
-│  │  • Synthetic (question, answer) pairs                   │    │ 
-│  │  • Descriptive summaries of meteorological series       │    │ 
-│  │  • Enriched geographic and temporal context             │    │
-│  │  • Specialized vocabulary for the MX climate domain     │    │
-│  └──────────────────────────┬──────────────────────────────┘    │
+│  │  • Synthetic (question, answer) pairs                   │    │
+│  │    e.g. "TMAX at station 25164 on 09/01/1978?" → "31°C" │    │
+│  │  • Monthly and annual summaries per station             │    │
+│  │  • Enriched geographic context (state, municipality)    │    │
+│  │  • CONAGUA and climatological terminology vocabulary    │    │
+│  └──────────────────────────┬──────────────────────────────┘    │ 
 │                             │                                   │
 │  4. MODEL TRAINING                                              │
 │  ┌──────────────────────────▼──────────────────────────────┐    │
 │  │  Transformer Architecture (from scratch)                │    │
 │  │  • Pre-training: Causal Language Modeling (CLM)         │    │
-│  │  • Supervised fine-tuning: meteorological Q&A pairs     │    │
+│  │  • Supervised fine-tuning: climatological Q&A pairs     │    │
 │  │  • Optional RLHF: human feedback on responses           │    │
-│  │  • Framework: PyTorch + HuggingFace Trainer (internal)  │    │ 
-│  └──────────────────────────┬──────────────────────────────┘    │
+│  │  • Framework: PyTorch + HuggingFace Trainer (internal)  │    │
+│  └──────────────────────────┬──────────────────────────────┘    │ 
 │                             │                                   │
 │  5. EVALUATION & VALIDATION                                     │
 │  ┌──────────────────────────▼──────────────────────────────┐    │
 │  │  Quality Metrics                                        │    │
 │  │  • Perplexity on CONAGUA validation corpus              │    │
 │  │  • BLEU / ROUGE on reference responses                  │    │ 
-│  │  • Human evaluation of meteorological accuracy          │    │ 
+│  │  • Human evaluation of climatological accuracy          │    │
 │  │  • Latency and throughput benchmarks                    │    │
 │  └──────────────────────────┬──────────────────────────────┘    │
 │                             │                                   │
@@ -134,26 +191,6 @@ Unlike systems that rely on generic models (OpenAI, Anthropic, Meta, etc.), ConA
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### CONAGUA Dataset Structure
-
-| Field | Description | Type |
-|---|---|---|
-| `station_id` | Unique station identifier | String |
-| `state` | Mexican state | String |
-| `municipality` | Station municipality | String |
-| `latitude / longitude` | Geographic coordinates | Float |
-| `altitude_m` | Altitude above sea level | Float |
-| `date` | Observation date | Date |
-| `temp_max_c` | Maximum temperature (°C) | Float |
-| `temp_min_c` | Minimum temperature (°C) | Float |
-| `temp_avg_c` | Average temperature (°C) | Float |
-| `precipitation_mm` | Accumulated precipitation (mm) | Float |
-| `humidity_pct` | Relative humidity (%) | Float |
-| `wind_speed_kmh` | Wind speed (km/h) | Float |
-| `wind_direction` | Wind direction | String |
-| `atmospheric_pressure_hpa` | Atmospheric pressure (hPa) | Float |
-| `evaporation_mm` | Evaporation (mm) | Float |
-
 ### Data Pipelines
 
 ```
@@ -163,7 +200,7 @@ Unlike systems that rely on generic models (OpenAI, Anthropic, Meta, etc.), ConA
 │                                                              │
 │  Pipeline 1: ETL (Extract, Transform, Load)                  │
 │  ┌────────────┐   ┌──────────────┐   ┌──────────────────┐    │
-│  │ Raw CSV    │ → │  Polars      │ → │  PostgreSQL /    │    │
+│  │ Plain TXT  │ → │  Polars      │ → │  PostgreSQL /    │    │
 │  │ CONAGUA    │   │  Transform   │   │  Parquet Store   │    │
 │  └────────────┘   └──────────────┘   └──────────────────┘    │
 │                                                              │
@@ -175,7 +212,7 @@ Unlike systems that rely on generic models (OpenAI, Anthropic, Meta, etc.), ConA
 │                                                              │
 │  Pipeline 3: Continuous Training                             │
 │  ┌────────────┐   ┌──────────────┐   ┌──────────────────┐    │
-│  │  New       │ → │  Incremental │ → │  Model Registry  │    │
+│  │  New       │ → │  Incremental │ → │  Model Registry  │    │  
 │  │  data      │   │  fine-tuning │   │  (MLflow)        │    │
 │  └────────────┘   └──────────────┘   └──────────────────┘    │
 │                                                              │
@@ -189,7 +226,7 @@ Unlike systems that rely on generic models (OpenAI, Anthropic, Meta, etc.), ConA
 ### Artificial Intelligence
 - **Custom LLM (ConAIgua Model)**: Transformer model trained from scratch on CONAGUA data — no dependency on external APIs
 - **RAG (Retrieval-Augmented Generation)**: Semantic search over the CONAGUA dataset to enrich responses with precise data
-- **Vector Embeddings**: Qdrant for efficient meteorological context retrieval
+- **Vector Embeddings**: Qdrant for efficient climatological context retrieval
 - **Response Streaming**: WebSocket for real-time responses
 - **Continuous Training**: Pipeline for retraining with new CONAGUA data
 
@@ -200,10 +237,11 @@ Unlike systems that rely on generic models (OpenAI, Anthropic, Meta, etc.), ConA
 - **React Server Components**: Reduced client-side JS bundle
 - **API Routes**: Backend-for-Frontend integrated in Next.js
 
-### Meteorological Data
-- **CONAGUA Dataset**: Historical data from weather stations across Mexico
-- **Multiple Metrics**: Temperature, precipitation, humidity, wind, pressure, evaporation
-- **Temporal Queries**: Date ranges, aggregations, trends, and anomalies
+### Climatological Data
+- **CONAGUA Dataset**: National Climatological Database with daily records dating back to the 1920s
+- **4 Climate Variables**: Precipitation (mm), Evaporation (mm), Maximum Temperature (°C), Minimum Temperature (°C)
+- **Thousands of Stations**: Coverage across all of Mexico
+- **Temporal Queries**: Date ranges, monthly/annual aggregations, trends, and anomalies
 
 ### Security
 - **Microsegmentation**: Component isolation with Network Policies
@@ -240,7 +278,7 @@ The project follows **Hexagonal Architecture** principles (also known as Ports a
 │                                                             │
 │  ┌──────────────────────────────────────────────────────┐   │
 │  │              ADAPTERS (Infrastructure)               │   │
-│  │                                                      │   │ 
+│  │                                                      │   │
 │  │   ┌─────────────┐          ┌─────────────┐           │   │
 │  │   │  REST API   │          │  WebSocket  │           │   │
 │  │   │   (Axum)    │          │   (Axum)    │           │   │
@@ -253,7 +291,7 @@ The project follows **Hexagonal Architecture** principles (also known as Ports a
 │  │                    DOMAIN CORE                       │   │
 │  │                                                      │   │
 │  │  ┌────────────────────────────────────────────────┐  │   │
-│  │  │       Application Services (Use Cases)         │  │   │ 
+│  │  │       Application Services (Use Cases)         │  │   │
 │  │  │       • ChatOrchestrator                       │  │   │ 
 │  │  │       • AuthenticationService                  │  │   │
 │  │  │       • SessionManager                         │  │   │
@@ -261,8 +299,8 @@ The project follows **Hexagonal Architecture** principles (also known as Ports a
 │  │                                                      │   │
 │  │  ┌────────────────────────────────────────────────┐  │   │
 │  │  │        Domain Logic (Business Rules)           │  │   │
-│  │  │        • IntentParser                          │  │   │ 
-│  │  │        • RAGService                            │  │   │
+│  │  │        • IntentParser                          │  │   │
+│  │  │        • RAGService                            │  │   │ 
 │  │  │        • ConAIguaLLMService (custom model)     │  │   │
 │  │  └────────────────────────────────────────────────┘  │   │
 │  │                                                      │   │
@@ -279,7 +317,7 @@ The project follows **Hexagonal Architecture** principles (also known as Ports a
 │  │              ADAPTERS (Infrastructure)               │   │
 │  │                                                      │   │
 │  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────┐     │   │
-│  │  │PostgreSQL│ │ MongoDB  │ │  Qdrant  │ │Redis │     │   │
+│  │  │PostgreSQL│ │ MongoDB  │ │  Qdrant  │ │Redis │     │   │ 
 │  │  │Repository│ │Repository│ │Repository│ │Cache │     │   │
 │  │  └──────────┘ └──────────┘ └──────────┘ └──────┘     │   │
 │  │                                                      │   │
@@ -363,7 +401,7 @@ See the `/docs/architecture/` folder for complete diagrams.
 | **Backend API** | Rust (Axum) | Async, high performance |
 | **LLM** | PyTorch + custom Transformer | Trained from scratch on CONAGUA |
 | **RAG** | Qdrant + custom embeddings | ConAIgua model vectors |
-| **Data Pipeline** | Polars / Pandas | CONAGUA dataset ETL |
+| **Data Pipeline** | Polars / Pandas | CONAGUA ETL (TXT → tabular) |
 | **Model Serving** | ONNX Runtime / TorchServe | Optimized local inference |
 | **Relational DB** | PostgreSQL | Users and sessions |
 | **Document DB** | MongoDB | Chat history |
