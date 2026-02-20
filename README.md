@@ -1,7 +1,15 @@
+<div align="center">
+
 # ConAIgua - Sistema de Consultas Meteorológicas con LLM
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg) ![Rust](https://img.shields.io/badge/Rust-1.75+-orange.svg) ![React](https://img.shields.io/badge/React-18+-61DAFB.svg) ![Next.js](https://img.shields.io/badge/Next.js-14+-black.svg) ![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg) ![Status](https://img.shields.io/badge/status-en%20desarrollo-yellow.svg)
+![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![Rust](https://img.shields.io/badge/Rust-1.75+-orange.svg)
+![React](https://img.shields.io/badge/React-18+-61DAFB.svg)
+![Next.js](https://img.shields.io/badge/Next.js-14+-black.svg)
+![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)
+![Status](https://img.shields.io/badge/status-en%20desarrollo-yellow.svg)
 
+</div>
 Chatbot inteligente que permite consultar información meteorológica histórica de CONAGUA mediante procesamiento de lenguaje natural, impulsado por un **LLM entrenado desde cero** con datos exclusivos de CONAGUA.
 
 ## Descripción General
