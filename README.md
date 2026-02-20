@@ -77,59 +77,59 @@ Unlike systems that rely on generic models (OpenAI, Anthropic, Meta, etc.), ConA
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │  1. DATA INGESTION                                              │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │  CONAGUA Dataset (CSV/Parquet)                          │   │
-│  │  • Meteorological stations (all of Mexico)              │   │
-│  │  • Historical series: temperature, precipitation,       │   │
-│  │    humidity, wind, atmospheric pressure                 │   │
-│  │  • Metadata: coordinates, altitude, state, municipality │   │
-│  └──────────────────────────┬──────────────────────────────┘   │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │  CONAGUA Dataset (CSV/Parquet)                          │    │
+│  │  • Meteorological stations (all of Mexico)              │    │
+│  │  • Historical series: temperature, precipitation,       │    │
+│  │    humidity, wind, atmospheric pressure                 │    │
+│  │  • Metadata: coordinates, altitude, state, municipality │    │
+│  └──────────────────────────┬──────────────────────────────┘    │
 │                             │                                   │
 │  2. PREPROCESSING                                               │
-│  ┌──────────────────────────▼──────────────────────────────┐   │
-│  │  Cleaning & Normalization Pipeline (Polars/Pandas)      │   │
-│  │  • Null value handling and interpolation                │   │
-│  │  • Unit and scale normalization                         │   │
-│  │  • Outlier detection and correction                     │   │
-│  │  • Time series tokenization                             │   │
-│  │  • Conversion to structured text format                 │   │
-│  └──────────────────────────┬──────────────────────────────┘   │
+│  ┌──────────────────────────▼──────────────────────────────┐    │
+│  │  Cleaning & Normalization Pipeline (Polars/Pandas)      │    │
+│  │  • Null value handling and interpolation                │    │ 
+│  │  • Unit and scale normalization                         │    │
+│  │  • Outlier detection and correction                     │    │
+│  │  • Time series tokenization                             │    │
+│  │  • Conversion to structured text format                 │    │
+│  └──────────────────────────┬──────────────────────────────┘    │
 │                             │                                   │
 │  3. CORPUS BUILDING                                             │
-│  ┌──────────────────────────▼──────────────────────────────┐   │
-│  │  Training Corpus Generation                             │   │
-│  │  • Synthetic (question, answer) pairs                   │   │
-│  │  • Descriptive summaries of meteorological series       │   │
-│  │  • Enriched geographic and temporal context             │   │
-│  │  • Specialized vocabulary for the MX climate domain     │   │
-│  └──────────────────────────┬──────────────────────────────┘   │
+│  ┌──────────────────────────▼──────────────────────────────┐    │
+│  │  Training Corpus Generation                             │    │
+│  │  • Synthetic (question, answer) pairs                   │    │ 
+│  │  • Descriptive summaries of meteorological series       │    │ 
+│  │  • Enriched geographic and temporal context             │    │
+│  │  • Specialized vocabulary for the MX climate domain     │    │
+│  └──────────────────────────┬──────────────────────────────┘    │
 │                             │                                   │
 │  4. MODEL TRAINING                                              │
-│  ┌──────────────────────────▼──────────────────────────────┐   │
-│  │  Transformer Architecture (from scratch)                │   │
-│  │  • Pre-training: Causal Language Modeling (CLM)         │   │
-│  │  • Supervised fine-tuning: meteorological Q&A pairs     │   │
-│  │  • Optional RLHF: human feedback on responses           │   │
-│  │  • Framework: PyTorch + HuggingFace Trainer (internal)  │   │
-│  └──────────────────────────┬──────────────────────────────┘   │
+│  ┌──────────────────────────▼──────────────────────────────┐    │
+│  │  Transformer Architecture (from scratch)                │    │
+│  │  • Pre-training: Causal Language Modeling (CLM)         │    │
+│  │  • Supervised fine-tuning: meteorological Q&A pairs     │    │
+│  │  • Optional RLHF: human feedback on responses           │    │
+│  │  • Framework: PyTorch + HuggingFace Trainer (internal)  │    │ 
+│  └──────────────────────────┬──────────────────────────────┘    │
 │                             │                                   │
 │  5. EVALUATION & VALIDATION                                     │
-│  ┌──────────────────────────▼──────────────────────────────┐   │
-│  │  Quality Metrics                                        │   │
-│  │  • Perplexity on CONAGUA validation corpus              │   │
-│  │  • BLEU / ROUGE on reference responses                  │   │
-│  │  • Human evaluation of meteorological accuracy          │   │
-│  │  • Latency and throughput benchmarks                    │   │
-│  └──────────────────────────┬──────────────────────────────┘   │
+│  ┌──────────────────────────▼──────────────────────────────┐    │
+│  │  Quality Metrics                                        │    │
+│  │  • Perplexity on CONAGUA validation corpus              │    │
+│  │  • BLEU / ROUGE on reference responses                  │    │ 
+│  │  • Human evaluation of meteorological accuracy          │    │ 
+│  │  • Latency and throughput benchmarks                    │    │
+│  └──────────────────────────┬──────────────────────────────┘    │
 │                             │                                   │
 │  6. DEPLOYMENT                                                  │
-│  ┌──────────────────────────▼──────────────────────────────┐   │
-│  │  Model Serving                                          │   │
-│  │  • Export to ONNX or TorchScript                        │   │
-│  │  • INT8/FP16 quantization for efficiency                │   │
-│  │  • Serving via internal REST API (Rust ↔ Python bridge) │   │
-│  │  • Model versioning with MLflow                         │   │
-│  └─────────────────────────────────────────────────────────┘   │
+│  ┌──────────────────────────▼──────────────────────────────┐    │
+│  │  Model Serving                                          │    │
+│  │  • Export to ONNX or TorchScript                        │    │
+│  │  • INT8/FP16 quantization for efficiency                │    │
+│  │  • Serving via internal REST API (Rust ↔ Python bridge) │    │
+│  │  • Model versioning with MLflow                         │    │
+│  └─────────────────────────────────────────────────────────┘    │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -162,22 +162,22 @@ Unlike systems that rely on generic models (OpenAI, Anthropic, Meta, etc.), ConA
 ├──────────────────────────────────────────────────────────────┤
 │                                                              │
 │  Pipeline 1: ETL (Extract, Transform, Load)                  │
-│  ┌────────────┐   ┌──────────────┐   ┌──────────────────┐   │
-│  │ Raw CSV    │ → │  Polars      │ → │  PostgreSQL /    │   │
-│  │ CONAGUA    │   │  Transform   │   │  Parquet Store   │   │
-│  └────────────┘   └──────────────┘   └──────────────────┘   │
+│  ┌────────────┐   ┌──────────────┐   ┌──────────────────┐    │
+│  │ Raw CSV    │ → │  Polars      │ → │  PostgreSQL /    │    │
+│  │ CONAGUA    │   │  Transform   │   │  Parquet Store   │    │
+│  └────────────┘   └──────────────┘   └──────────────────┘    │
 │                                                              │
 │  Pipeline 2: Embedding for RAG                               │
-│  ┌────────────┐   ┌──────────────┐   ┌──────────────────┐   │
-│  │  Clean     │ → │  Tokenizer   │ → │  Qdrant Vector   │   │
-│  │  data      │   │  + Encoder   │   │  DB (embeddings) │   │
-│  └────────────┘   └──────────────┘   └──────────────────┘   │
+│  ┌────────────┐   ┌──────────────┐   ┌──────────────────┐    │
+│  │  Clean     │ → │  Tokenizer   │ → │  Qdrant Vector   │    │
+│  │  data      │   │  + Encoder   │   │  DB (embeddings) │    │
+│  └────────────┘   └──────────────┘   └──────────────────┘    │
 │                                                              │
 │  Pipeline 3: Continuous Training                             │
-│  ┌────────────┐   ┌──────────────┐   ┌──────────────────┐   │
-│  │  New       │ → │  Incremental │ → │  Model Registry  │   │
-│  │  data      │   │  fine-tuning │   │  (MLflow)        │   │
-│  └────────────┘   └──────────────┘   └──────────────────┘   │
+│  ┌────────────┐   ┌──────────────┐   ┌──────────────────┐    │
+│  │  New       │ → │  Incremental │ → │  Model Registry  │    │
+│  │  data      │   │  fine-tuning │   │  (MLflow)        │    │
+│  └────────────┘   └──────────────┘   └──────────────────┘    │
 │                                                              │
 └──────────────────────────────────────────────────────────────┘
 ```
@@ -238,57 +238,57 @@ The project follows **Hexagonal Architecture** principles (also known as Ports a
 │                   HEXAGONAL ARCHITECTURE                    │
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │              ADAPTERS (Infrastructure)               │  │
-│  │                                                      │  │
-│  │   ┌─────────────┐          ┌─────────────┐          │  │
-│  │   │  REST API   │          │  WebSocket  │          │  │
-│  │   │   (Axum)    │          │   (Axum)    │          │  │
-│  │   └──────┬──────┘          └──────┬──────┘          │  │
-│  └─────────┼────────────────────────│───────────────────┘  │
-│            │                        │                      │
-│            │      PRIMARY PORTS (Input)                    │
-│            ▼                        ▼                      │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │                    DOMAIN CORE                       │  │
-│  │                                                      │  │
-│  │  ┌────────────────────────────────────────────────┐  │  │
-│  │  │       Application Services (Use Cases)         │  │  │
-│  │  │       • ChatOrchestrator                       │  │  │
-│  │  │       • AuthenticationService                  │  │  │
-│  │  │       • SessionManager                         │  │  │
-│  │  └────────────────────────────────────────────────┘  │  │
-│  │                                                      │  │
-│  │  ┌────────────────────────────────────────────────┐  │  │
-│  │  │        Domain Logic (Business Rules)           │  │  │
-│  │  │        • IntentParser                          │  │  │
-│  │  │        • RAGService                            │  │  │
-│  │  │        • ConAIguaLLMService (custom model)     │  │  │
-│  │  └────────────────────────────────────────────────┘  │  │
-│  │                                                      │  │
-│  │  ┌────────────────────────────────────────────────┐  │  │
-│  │  │        Domain Entities (Models)                │  │  │
-│  │  │        • User, Session, Message                │  │  │
-│  │  │        • ChatContext, EmbeddingVector           │  │  │
-│  │  └────────────────────────────────────────────────┘  │  │
-│  └───────────────────────┬──────────────────────────────┘  │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │              ADAPTERS (Infrastructure)               │   │
+│  │                                                      │   │ 
+│  │   ┌─────────────┐          ┌─────────────┐           │   │
+│  │   │  REST API   │          │  WebSocket  │           │   │
+│  │   │   (Axum)    │          │   (Axum)    │           │   │
+│  │   └──────┬──────┘          └──────┬──────┘           │   │
+│  └─────────┼────────────────────────│───────────────────┘   │
+│            │                        │                       │
+│            │      PRIMARY PORTS (Input)                     │
+│            ▼                        ▼                       │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │                    DOMAIN CORE                       │   │
+│  │                                                      │   │
+│  │  ┌────────────────────────────────────────────────┐  │   │
+│  │  │       Application Services (Use Cases)         │  │   │ 
+│  │  │       • ChatOrchestrator                       │  │   │ 
+│  │  │       • AuthenticationService                  │  │   │
+│  │  │       • SessionManager                         │  │   │
+│  │  └────────────────────────────────────────────────┘  │   │
+│  │                                                      │   │
+│  │  ┌────────────────────────────────────────────────┐  │   │
+│  │  │        Domain Logic (Business Rules)           │  │   │
+│  │  │        • IntentParser                          │  │   │ 
+│  │  │        • RAGService                            │  │   │
+│  │  │        • ConAIguaLLMService (custom model)     │  │   │
+│  │  └────────────────────────────────────────────────┘  │   │
+│  │                                                      │   │
+│  │  ┌────────────────────────────────────────────────┐  │   │
+│  │  │        Domain Entities (Models)                │  │   │
+│  │  │        • User, Session, Message                │  │   │
+│  │  │        • ChatContext, EmbeddingVector          │  │   │
+│  │  └────────────────────────────────────────────────┘  │   │
+│  └───────────────────────┬──────────────────────────────┘   │
 │                          │                                  │
-│            SECONDARY PORTS (Output)                        │
+│            SECONDARY PORTS (Output)                         │
 │                          ▼                                  │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │              ADAPTERS (Infrastructure)               │  │
-│  │                                                      │  │
-│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────┐   │  │
-│  │  │PostgreSQL│ │ MongoDB  │ │  Qdrant  │ │Redis │   │  │
-│  │  │Repository│ │Repository│ │Repository│ │Cache │   │  │
-│  │  └──────────┘ └──────────┘ └──────────┘ └──────┘   │  │
-│  │                                                      │  │
-│  │  ┌──────────────────────┐  ┌────────────────────┐   │  │
-│  │  │ ConAIgua LLM Client  │  │ CONAGUA DataFrame  │   │  │
-│  │  │ (custom model,       │  │ (Polars/Pandas)    │   │  │
-│  │  │  served locally)     │  │                    │   │  │
-│  │  └──────────────────────┘  └────────────────────┘   │  │
-│  └──────────────────────────────────────────────────────┘  │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │              ADAPTERS (Infrastructure)               │   │
+│  │                                                      │   │
+│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────┐     │   │
+│  │  │PostgreSQL│ │ MongoDB  │ │  Qdrant  │ │Redis │     │   │
+│  │  │Repository│ │Repository│ │Repository│ │Cache │     │   │
+│  │  └──────────┘ └──────────┘ └──────────┘ └──────┘     │   │
+│  │                                                      │   │
+│  │  ┌──────────────────────┐  ┌────────────────────┐    │   │
+│  │  │ ConAIgua LLM Client  │  │ CONAGUA DataFrame  │    │   │
+│  │  │ (custom model,       │  │ (Polars/Pandas)    │    │   │
+│  │  │  served locally)     │  │                    │    │   │
+│  │  └──────────────────────┘  └────────────────────┘    │   │
+│  └──────────────────────────────────────────────────────┘   │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
