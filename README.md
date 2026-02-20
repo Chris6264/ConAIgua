@@ -9,7 +9,7 @@
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)
 ![Status](https://img.shields.io/badge/status-in%20development-yellow.svg)
 
-🌐 [Versión en Español](README.es.md)
+[Versión en Español](README.es.md)
 
 </div>
 
@@ -19,7 +19,7 @@ Intelligent chatbot for querying historical hydrometeorological data from CONAGU
 
 **ConAIgua** is a hydrometeorological data query system that uses a **custom Large Language Model (LLM)**, trained entirely from scratch on historical data from CONAGUA (Comisión Nacional del Agua de México), combined with **Retrieval-Augmented Generation (RAG)** to deliver precise and contextual answers in natural language.
 
-> ⚠️ **Important**: The language model used in ConAIgua is **not an external or pre-existing LLM** (it is not GPT, Claude, LLaMA, or any third-party model). It is a model **designed, trained, and optimized from scratch** using exclusively the CONAGUA dataset, meteorological data processing pipelines, and custom Transformer architectures. This ensures the model has deep, specialized knowledge of the Mexican hydrometeorological domain.
+> **Important**: The language model used in ConAIgua is **not an external or pre-existing LLM** (it is not GPT, Claude, LLaMA, or any third-party model). It is a model **designed, trained, and optimized from scratch** using exclusively the CONAGUA dataset, meteorological data processing pipelines, and custom Transformer architectures. This ensures the model has deep, specialized knowledge of the Mexican hydrometeorological domain.
 
 ### What problem does it solve?
 
