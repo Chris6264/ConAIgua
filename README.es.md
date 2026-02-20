@@ -1,6 +1,6 @@
 <div align="center">
 
-# ConAIgua - Sistema de Consultas Meteorológicas con LLM
+# ConAIgua - Sistema de Consultas Hidrometeorólogicas con LLM
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![Rust](https://img.shields.io/badge/Rust-1.75+-orange.svg)
@@ -9,24 +9,27 @@
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)
 ![Status](https://img.shields.io/badge/status-en%20desarrollo-yellow.svg)
 
+[English Version](README.md)
+
 </div>
-Chatbot inteligente que permite consultar información meteorológica histórica de CONAGUA mediante procesamiento de lenguaje natural, impulsado por un **LLM entrenado desde cero** con datos exclusivos de CONAGUA.
+
+Chatbot inteligente para consultar datos hidrometeorológicos históricos de CONAGUA (Comisión Nacional del Agua de México) mediante procesamiento de lenguaje natural, impulsado por un **LLM entrenado desde cero** con datos exclusivos de CONAGUA.
 
 ## Descripción General
 
-**ConAIgua** es un sistema de consulta de información meteorológica que utiliza un **Large Language Model (LLM) propio**, entrenado íntegramente desde cero con datos históricos de CONAGUA (Comisión Nacional del Agua de México), combinado con **Retrieval-Augmented Generation (RAG)** para proporcionar respuestas precisas y contextuales en lenguaje natural.
+**ConAIgua** es un sistema de consulta de datos hidrometeorológicos que utiliza un **Large Language Model (LLM) propio**, entrenado íntegramente desde cero con datos históricos de CONAGUA (Comisión Nacional del Agua de México), combinado con **Retrieval-Augmented Generation (RAG)** para proporcionar respuestas precisas y contextuales en lenguaje natural.
 
-> **Importante**: El modelo de lenguaje utilizado en ConAIgua **no es un LLM externo ni preexistente** (no es GPT, Claude, LLaMA, ni ningún modelo de terceros). Es un modelo **diseñado, entrenado y optimizado desde cero** utilizando exclusivamente el dataset de CONAGUA, pipelines de procesamiento de datos meteorológicos y arquitecturas Transformer propias. Esto garantiza que el modelo tenga conocimiento profundo y especializado del dominio meteorológico mexicano.
+> **Importante**: El modelo de lenguaje utilizado en ConAIgua **no es un LLM externo ni preexistente** (no es GPT, Claude, LLaMA, ni ningún modelo de terceros). Es un modelo **diseñado, entrenado y optimizado desde cero** utilizando exclusivamente el dataset de CONAGUA, pipelines de procesamiento de datos hidrometeorológicos y arquitecturas Transformer propias. Esto garantiza que el modelo tenga conocimiento profundo y especializado del dominio climatológico mexicano.
 
 ### ¿Qué problema resuelve?
 
-Los datos meteorológicos históricos suelen estar en formatos poco accesibles (CSVs, bases de datos complejas). Este chatbot permite:
+Los datos hidrometeorológicos históricos suelen estar en formatos poco accesibles (archivos TXT planos, CSVs, bases de datos complejas). Este chatbot permite:
 
-- **Consultas en lenguaje natural**: "¿Cuál fue la temperatura en Culiacán la semana pasada?"
-- **Análisis de datos meteorológicos**: Temperaturas, precipitación, humedad, viento, presión atmosférica
-- **Búsqueda semántica**: RAG sobre dataset CONAGUA para respuestas contextuales precisas
+- **Consultas en lenguaje natural**: "¿Cuál fue la temperatura máxima en Culiacán en enero de 1978?"
+- **Análisis de datos climatológicos**: Precipitación, evaporación, temperatura máxima y mínima diaria
+- **Búsqueda semántica**: RAG sobre el dataset CONAGUA para respuestas contextuales precisas
 - **Respuestas en tiempo real**: Interfaz web interactiva con streaming de respuestas
-- **Dominio especializado**: El LLM entiende terminología, estaciones y patrones climáticos mexicanos de forma nativa
+- **Dominio especializado**: El LLM comprende de forma nativa la estructura de estaciones CONAGUA, sus identificadores, estados y municipios de México
 
 ### Arquitectura de Alto Nivel
 
@@ -41,8 +44,8 @@ Los datos meteorológicos históricos suelen estar en formatos poco accesibles (
               ▼                     ▼                     ▼
     ┌───────────────┐     ┌─────────────┐     ┌─────────────┐
     │  PostgreSQL   │     │   MongoDB   │     │   Qdrant    │
-    │  (Users/      │     │   (Chat     │     │   (Vector   │
-    │  Sessions)    │     │   History)  │     │   DB)       │
+    │  (Usuarios/   │     │  (Historial │     │   (Base de  │
+    │  Sesiones)    │     │   de Chat)  │     │  Vectores)  │
     └───────────────┘     └─────────────┘     └─────────────┘
                                 │
                                 ▼
@@ -59,12 +62,66 @@ Los datos meteorológicos históricos suelen estar en formatos poco accesibles (
 
 ### ¿Por qué un LLM propio?
 
-A diferencia de sistemas que utilizan modelos genéricos (OpenAI, Anthropic, Meta, etc.), ConAIgua desarrolla su propio modelo de lenguaje entrenado exclusivamente con datos meteorológicos mexicanos. Esto permite:
+A diferencia de sistemas que utilizan modelos genéricos (OpenAI, Anthropic, Meta, etc.), ConAIgua desarrolla su propio modelo de lenguaje entrenado exclusivamente con datos hidrometeorológicos mexicanos. Esto permite:
 
-- **Especialización total en el dominio**: El modelo comprende de forma nativa las estaciones CONAGUA, sus identificadores, regiones climáticas y patrones históricos de México
+- **Especialización total en el dominio**: El modelo comprende de forma nativa las estaciones CONAGUA, sus claves, organismos responsables, estados y municipios de México
 - **Privacidad y soberanía de datos**: No se envía información a servicios externos
 - **Control total del modelo**: Ajuste fino, versionado y despliegue completamente controlados
 - **Sin dependencia de terceros**: No hay costos por API ni riesgos de discontinuidad de servicio
+
+### Formato Real del Dataset CONAGUA
+
+El dataset proviene de la **Base de Datos Climatológica Nacional** (CNA-SMN-CG-GMC-SMAA-CLIMATOLOGIA), con datos suministrados por las Oficinas Regionales de CONAGUA. Cada archivo de estación tiene el siguiente formato:
+
+```
+ESTACION  : 25164
+NOMBRE    : ALTO DE CULIACANCITO
+ESTADO    : SINALOA
+MUNICIPIO : CULIACAN
+SITUACIÓN : SUSPENDIDA
+ORGANISMO : CONAGUA-DGE
+CVE-OMM   : Nulo
+LATITUD   : 024.807°
+LONGITUD  : -107.555°
+ALTITUD   : 24 msnm
+
+EMISION   : 06/04/2020
+
+           PRECIP  EVAP   TMAX   TMIN
+  FECHA     (MM)   (MM)   (°C)   (°C)
+01/01/1978  0     Nulo    24     12
+02/01/1978  0     Nulo    26     16
+03/01/1978  0     Nulo    30     11
+...
+```
+
+### Estructura del Dataset CONAGUA
+
+**Metadatos de Estación:**
+
+| Campo | Descripción | Ejemplo |
+|---|---|---|
+| `ESTACION` | Clave única de la estación | `25164` |
+| `NOMBRE` | Nombre de la estación | `ALTO DE CULIACANCITO` |
+| `ESTADO` | Estado de la República Mexicana | `SINALOA` |
+| `MUNICIPIO` | Municipio de la estación | `CULIACAN` |
+| `SITUACIÓN` | Estado operativo | `SUSPENDIDA` / `ACTIVA` |
+| `ORGANISMO` | Organismo responsable | `CONAGUA-DGE` |
+| `CVE-OMM` | Clave OMM internacional | `Nulo` o código numérico |
+| `LATITUD` | Coordenada geográfica | `024.807°` |
+| `LONGITUD` | Coordenada geográfica | `-107.555°` |
+| `ALTITUD` | Metros sobre el nivel del mar | `24 msnm` |
+| `EMISION` | Fecha de emisión del reporte | `06/04/2020` |
+
+**Registros Diarios:**
+
+| Campo | Descripción | Unidad |
+|---|---|---|
+| `FECHA` | Fecha de la observación | `DD/MM/YYYY` |
+| `PRECIP` | Precipitación acumulada | mm |
+| `EVAP` | Evaporación | mm |
+| `TMAX` | Temperatura máxima del día | °C |
+| `TMIN` | Temperatura mínima del día | °C |
 
 ### Pipeline de Entrenamiento del LLM
 
@@ -75,39 +132,42 @@ A diferencia de sistemas que utilizan modelos genéricos (OpenAI, Anthropic, Met
 │                                                                 │
 │  1. INGESTA DE DATOS                                            │
 │  ┌─────────────────────────────────────────────────────────┐    │
-│  │  Dataset CONAGUA (CSV/Parquet)                          │    │
-│  │  • Estaciones meteorológicas (todo México)              │    │
-│  │  • Series históricas: temperatura, precipitación,       │    │
-│  │    humedad, viento, presión atmosférica                 │    │
-│  │  • Metadata: coordenadas, altitud, estado, municipio    │    │
+│  │  Dataset CONAGUA (archivos TXT planos por estación)     │    │
+│  │  • Metadatos: clave, nombre, estado, municipio,         │    │
+│  │    situación, organismo, coordenadas, altitud           │    │
+│  │  • Series diarias: PRECIP, EVAP, TMAX, TMIN             │    │
+│  │  • Cobertura histórica desde los años 1920 hasta 2020   │    │
+│  │  • Miles de estaciones en toda la República Mexicana    │    │
 │  └──────────────────────────┬──────────────────────────────┘    │
 │                             │                                   │
 │  2. PREPROCESAMIENTO                                            │
 │  ┌──────────────────────────▼──────────────────────────────┐    │
 │  │  Pipeline de Limpieza y Normalización (Polars/Pandas)   │    │
-│  │  • Manejo de valores nulos e interpolación              │    │
-│  │  • Normalización de unidades y escalas                  │    │
-│  │  • Detección y corrección de outliers                   │    │
-│  │  • Tokenización de series temporales                    │    │
-│  │  • Conversión a formato texto estructurado              │    │
+│  │  • Parseo del formato TXT propietario de CONAGUA        │    │
+│  │  • Tratamiento del literal "Nulo" → NaN                 │    │
+│  │  • Interpolación temporal de valores faltantes          │    │
+│  │  • Detección y corrección de outliers climatológicos    │    │
+│  │  • Normalización de coordenadas y altitudes             │    │
+│  │  • Conversión a formato tabular estructurado            │    │
 │  └──────────────────────────┬──────────────────────────────┘    │
 │                             │                                   │
 │  3. CONSTRUCCIÓN DEL CORPUS                                     │
 │  ┌──────────────────────────▼──────────────────────────────┐    │
 │  │  Generación de Corpus de Entrenamiento                  │    │
-│  │  • Pares (pregunta, respuesta) sintéticos               │    │ 
-│  │  • Resúmenes descriptivos de series meteorológicas      │    │ 
-│  │  • Contexto geográfico y temporal enriquecido           │    │
-│  │  • Vocabulario especializado del dominio climático MX   │    │ 
+│  │  • Pares (pregunta, respuesta) sintéticos               │    │
+│  │    ej: "TMAX en estación 25164 el 09/01/1978?" → "31°C" │    │
+│  │  • Resúmenes mensuales y anuales por estación           │    │
+│  │  • Contexto geográfico enriquecido (estado, municipio)  │    │
+│  │  • Vocabulario de terminología CONAGUA y climatológica  │    │
 │  └──────────────────────────┬──────────────────────────────┘    │
 │                             │                                   │
 │  4. ENTRENAMIENTO DEL MODELO                                    │
 │  ┌──────────────────────────▼──────────────────────────────┐    │
 │  │  Arquitectura Transformer (desde cero)                  │    │
 │  │  • Pre-entrenamiento: Modelado de lenguaje causal (CLM) │    │
-│  │  • Fine-tuning supervisado: pares Q&A meteorológicos    │    │
+│  │  • Fine-tuning supervisado: pares Q&A climatológicos    │    │ 
 │  │  • RLHF opcional: feedback humano sobre respuestas      │    │
-│  │  • Framework: PyTorch + HuggingFace Trainer (interno)   │    │
+│  │  • Framework: PyTorch + HuggingFace Trainer (interno)   │    │ 
 │  └──────────────────────────┬──────────────────────────────┘    │
 │                             │                                   │
 │  5. EVALUACIÓN Y VALIDACIÓN                                     │
@@ -115,8 +175,8 @@ A diferencia de sistemas que utilizan modelos genéricos (OpenAI, Anthropic, Met
 │  │  Métricas de Calidad                                    │    │
 │  │  • Perplexity sobre corpus de validación CONAGUA        │    │
 │  │  • BLEU / ROUGE en respuestas de referencia             │    │
-│  │  • Evaluación humana de precisión meteorológica         │    │
-│  │  • Benchmarks de latencia y throughput                  │    │ 
+│  │  • Evaluación humana de precisión climatológica         │    │
+│  │  • Benchmarks de latencia y throughput                  │    │
 │  └──────────────────────────┬──────────────────────────────┘    │
 │                             │                                   │
 │  6. DESPLIEGUE                                                  │
@@ -131,26 +191,6 @@ A diferencia de sistemas que utilizan modelos genéricos (OpenAI, Anthropic, Met
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### Estructura del Dataset CONAGUA
-
-| Campo | Descripción | Tipo |
-|---|---|---|
-| `station_id` | Identificador único de estación | String |
-| `state` | Estado de la República Mexicana | String |
-| `municipality` | Municipio de la estación | String |
-| `latitude / longitude` | Coordenadas geográficas | Float |
-| `altitude_m` | Altitud sobre el nivel del mar | Float |
-| `date` | Fecha de la observación | Date |
-| `temp_max_c` | Temperatura máxima (°C) | Float |
-| `temp_min_c` | Temperatura mínima (°C) | Float |
-| `temp_avg_c` | Temperatura promedio (°C) | Float |
-| `precipitation_mm` | Precipitación acumulada (mm) | Float |
-| `humidity_pct` | Humedad relativa (%) | Float |
-| `wind_speed_kmh` | Velocidad del viento (km/h) | Float |
-| `wind_direction` | Dirección del viento | String |
-| `atmospheric_pressure_hpa` | Presión atmosférica (hPa) | Float |
-| `evaporation_mm` | Evaporación (mm) | Float |
-
 ### Pipelines de Datos
 
 ```
@@ -160,7 +200,7 @@ A diferencia de sistemas que utilizan modelos genéricos (OpenAI, Anthropic, Met
 │                                                              │
 │  Pipeline 1: ETL (Extract, Transform, Load)                  │
 │  ┌────────────┐   ┌──────────────┐   ┌──────────────────┐    │
-│  │ Raw CSV    │ → │  Polars      │ → │  PostgreSQL /    │    │
+│  │ TXT plano  │ → │  Polars      │ → │  PostgreSQL /    │    │
 │  │ CONAGUA    │   │  Transform   │   │  Parquet Store   │    │
 │  └────────────┘   └──────────────┘   └──────────────────┘    │
 │                                                              │
@@ -170,7 +210,7 @@ A diferencia de sistemas que utilizan modelos genéricos (OpenAI, Anthropic, Met
 │  │ limpios    │   │  + Encoder   │   │  DB (embeddings) │    │
 │  └────────────┘   └──────────────┘   └──────────────────┘    │
 │                                                              │
-│  Pipeline 3: Entrenamiento continuo                          │
+│  Pipeline 3: Entrenamiento Continuo                          │
 │  ┌────────────┐   ┌──────────────┐   ┌──────────────────┐    │
 │  │ Nuevos     │ → │  Fine-tuning │ → │  Model Registry  │    │
 │  │ datos      │   │  incremental │   │  (MLflow)        │    │
@@ -185,8 +225,8 @@ A diferencia de sistemas que utilizan modelos genéricos (OpenAI, Anthropic, Met
 
 ### Inteligencia Artificial
 - **LLM Propio (ConAIgua Model)**: Modelo Transformer entrenado desde cero con datos CONAGUA — sin dependencia de APIs externas
-- **RAG (Retrieval-Augmented Generation)**: Búsqueda semántica en dataset CONAGUA para enriquecer respuestas con datos precisos
-- **Embeddings Vectoriales**: Qdrant para búsqueda eficiente de contexto meteorológico
+- **RAG (Retrieval-Augmented Generation)**: Búsqueda semántica en el dataset CONAGUA para enriquecer respuestas con datos precisos
+- **Embeddings Vectoriales**: Qdrant para búsqueda eficiente de contexto climatológico
 - **Streaming de Respuestas**: WebSocket para respuestas en tiempo real
 - **Entrenamiento Continuo**: Pipeline para re-entrenamiento con nuevos datos CONAGUA
 
@@ -197,10 +237,11 @@ A diferencia de sistemas que utilizan modelos genéricos (OpenAI, Anthropic, Met
 - **React Server Components**: Reducción del bundle JS en el cliente
 - **API Routes**: Backend-for-Frontend integrado en Next.js
 
-### Datos Meteorológicos
-- **Dataset CONAGUA**: Datos históricos de estaciones meteorológicas de toda la República Mexicana
-- **Múltiples Métricas**: Temperatura, precipitación, humedad, viento, presión, evaporación
-- **Consultas Temporales**: Rangos de fechas, agregaciones, tendencias y anomalías
+### Datos Climatológicos
+- **Dataset CONAGUA**: Base de Datos Climatológica Nacional con registros diarios desde los años 1920
+- **4 Variables Climáticas**: Precipitación (mm), Evaporación (mm), Temperatura Máxima (°C), Temperatura Mínima (°C)
+- **Miles de Estaciones**: Cobertura de toda la República Mexicana
+- **Consultas Temporales**: Rangos de fechas, agregaciones mensuales/anuales, tendencias y anomalías
 
 ### Seguridad
 - **Microsegmentación**: Aislamiento de componentes con Network Policies
@@ -236,44 +277,44 @@ El proyecto sigue los principios de **Arquitectura Hexagonal** (también conocid
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
 │  ┌──────────────────────────────────────────────────────┐   │
-│  │              ADAPTERS (Infrastructure)               │   │
+│  │              ADAPTADORES (Infraestructura)           │   │
 │  │                                                      │   │
 │  │   ┌─────────────┐          ┌─────────────┐           │   │
 │  │   │  REST API   │          │  WebSocket  │           │   │
 │  │   │   (Axum)    │          │   (Axum)    │           │   │
 │  │   └──────┬──────┘          └──────┬──────┘           │   │
-│  └─────────┼────────────────────────│───────────────────┘   │ 
+│  └─────────┼────────────────────────│───────────────────┘   │
 │            │                        │                       │
-│            │      PRIMARY PORTS (Input)                     │
+│            │      PUERTOS PRIMARIOS (Entrada)               │
 │            ▼                        ▼                       │
 │  ┌──────────────────────────────────────────────────────┐   │
-│  │                    DOMAIN CORE                       │   │
+│  │                   NÚCLEO DE DOMINIO                  │   │
 │  │                                                      │   │
 │  │  ┌────────────────────────────────────────────────┐  │   │
-│  │  │       Application Services (Use Cases)         │  │   │
+│  │  │     Servicios de Aplicación (Casos de Uso)     │  │   │  
 │  │  │       • ChatOrchestrator                       │  │   │
 │  │  │       • AuthenticationService                  │  │   │
-│  │  │       • SessionManager                         │  │   │
+│  │  │       • SessionManager                         │  │   │ 
 │  │  └────────────────────────────────────────────────┘  │   │
 │  │                                                      │   │
 │  │  ┌────────────────────────────────────────────────┐  │   │
-│  │  │        Domain Logic (Business Rules)           │  │   │
-│  │  │        • IntentParser                          │  │   │
-│  │  │        • RAGService                            │  │   │ 
+│  │  │      Lógica de Dominio (Reglas de Negocio)     │  │   │
+│  │  │        • IntentParser                          │  │   │ 
+│  │  │        • RAGService                            │  │   │
 │  │  │        • ConAIguaLLMService (modelo propio)    │  │   │
 │  │  └────────────────────────────────────────────────┘  │   │
-│  │                                                      │   │ 
+│  │                                                      │   │
 │  │  ┌────────────────────────────────────────────────┐  │   │
-│  │  │        Domain Entities (Models)                │  │   │
+│  │  │        Entidades de Dominio (Modelos)          │  │   │
 │  │  │        • User, Session, Message                │  │   │
 │  │  │        • ChatContext, EmbeddingVector          │  │   │
 │  │  └────────────────────────────────────────────────┘  │   │
-│  └───────────────────────┬──────────────────────────────┘   │ 
+│  └───────────────────────┬──────────────────────────────┘   │
 │                          │                                  │
-│            SECONDARY PORTS (Output)                         │
+│            PUERTOS SECUNDARIOS (Salida)                     │
 │                          ▼                                  │
 │  ┌──────────────────────────────────────────────────────┐   │
-│  │              ADAPTERS (Infrastructure)               │   │
+│  │              ADAPTADORES (Infraestructura)           │   │
 │  │                                                      │   │
 │  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────┐     │   │
 │  │  │PostgreSQL│ │ MongoDB  │ │  Qdrant  │ │Redis │     │   │
@@ -293,10 +334,10 @@ El proyecto sigue los principios de **Arquitectura Hexagonal** (también conocid
 #### Ventajas de esta Arquitectura
 
 1. **Domain-Driven Design (DDD)**: La lógica de negocio es el núcleo
-2. **Dependency Inversion**: Las dependencias apuntan hacia el dominio
+2. **Inversión de Dependencias**: Las dependencias apuntan hacia el dominio
 3. **Plug & Play**: Fácil versionado del LLM propio sin afectar la lógica de negocio
 4. **Testing**: Mocks simples de puertos para testing unitario
-5. **Clean Code**: Separación clara de responsabilidades
+5. **Código Limpio**: Separación clara de responsabilidades
 
 ### Microsegmentación y Seguridad
 
@@ -322,7 +363,7 @@ El sistema implementa **microsegmentación** siguiendo el modelo **Zero Trust**:
 │  • Sin acceso a Internet ni a bases de datos              │
 └───────────────────────────────────────────────────────────┘
 ┌───────────────────────────────────────────────────────────┐
-│  SEGMENTO 4: Data Layer                                   │
+│  SEGMENTO 4: Capa de Datos                                │
 │  • PostgreSQL, MongoDB, Qdrant, Redis                     │
 │  • Firewall interno con IP whitelisting                   │
 │  • Acceso: Solo servicios autorizados por puerto          │
@@ -360,7 +401,7 @@ Ver carpeta `/docs/architecture/` para diagramas completos.
 | **Backend API** | Rust (Axum) | Async, alto rendimiento |
 | **LLM** | PyTorch + Transformer propio | Entrenado desde cero con CONAGUA |
 | **RAG** | Qdrant + embeddings propios | Vectores del modelo ConAIgua |
-| **Data Pipeline** | Polars / Pandas | ETL del dataset CONAGUA |
+| **Data Pipeline** | Polars / Pandas | ETL del dataset CONAGUA (TXT → tabular) |
 | **Model Serving** | ONNX Runtime / TorchServe | Inferencia optimizada local |
 | **BD Relacional** | PostgreSQL | Usuarios y sesiones |
 | **BD Documental** | MongoDB | Historial de chat |
@@ -386,49 +427,49 @@ Ver carpeta `/docs/architecture/` para diagramas completos.
 #### Capa de Red
 - Firewall perimetral con IPS/IDS
 - WAF (Web Application Firewall)
-- DDoS protection
+- Protección DDoS
 - TLS 1.3 obligatorio
 - Geo-blocking opcional
 
 #### Autenticación y Autorización
 - JWT con RS256 (asimétrico)
-- Argon2 para passwords (cost factor 12)
-- Refresh token rotation
-- RBAC (Role-Based Access Control)
+- Argon2 para contraseñas (cost factor 12)
+- Rotación de refresh tokens
+- RBAC (Control de Acceso Basado en Roles)
 - Session timeout configurable
 - MFA opcional (TOTP)
 
 #### Protección de Aplicación
-- Input sanitization
-- SQL/NoSQL injection prevention
-- XSS protection (CSP headers)
-- CSRF tokens
+- Sanitización de entradas
+- Prevención de inyección SQL/NoSQL
+- Protección XSS (cabeceras CSP)
+- Tokens CSRF
 - Rate limiting por usuario/IP
-- Request size limits
+- Límites de tamaño de solicitudes
 
 #### Datos
-- Encryption at rest (AES-256)
-- Encryption in transit (TLS)
-- Secrets management (Vault/AWS Secrets)
-- Backup encryption
-- Data masking en logs
+- Cifrado en reposo (AES-256)
+- Cifrado en tránsito (TLS)
+- Gestión de secretos (Vault / AWS Secrets)
+- Cifrado de backups
+- Enmascaramiento de datos en logs
 
 #### Microsegmentación
 - Network Policies (K8s) o Security Groups (AWS)
 - Aislamiento por segmento (incluyendo segmento dedicado para el LLM)
-- Default Deny
-- Least privilege access
+- Denegación por defecto
+- Principio de mínimo privilegio
 
 ### Auditoría y Compliance
 - Logging estructurado (JSON)
-- SIEM integration
+- Integración SIEM
 - Alertas de seguridad
 - Compliance: GDPR, SOC2
 
 ---
 
-## License
+## Licencia
 
 Copyright © 2026 Chris6264
 
-Licensed under the Apache License, Version 2.0.
+Licenciado bajo la Licencia Apache, Versión 2.0.
