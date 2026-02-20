@@ -70,7 +70,7 @@ A diferencia de sistemas que utilizan modelos genéricos (OpenAI, Anthropic, Met
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│              PIPELINE DE ENTRENAMIENTO CONAIGU LLM              │
+│              PIPELINE DE ENTRENAMIENTO ConAIgua LLM             │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │  1. INGESTA DE DATOS                                            │
