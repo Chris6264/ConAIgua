@@ -1,34 +1,37 @@
 <div align="center">
 
-# ConAIgua - Sistema de Consultas Meteorológicas con LLM
+# ConAIgua - Hydrometeorological Data Query System with LLM
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![Rust](https://img.shields.io/badge/Rust-1.75+-orange.svg)
 ![React](https://img.shields.io/badge/React-18+-61DAFB.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-14+-black.svg)
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)
-![Status](https://img.shields.io/badge/status-en%20desarrollo-yellow.svg)
+![Status](https://img.shields.io/badge/status-in%20development-yellow.svg)
+
+🌐 [Versión en Español](README.md)
 
 </div>
-Chatbot inteligente que permite consultar información meteorológica histórica de CONAGUA mediante procesamiento de lenguaje natural, impulsado por un **LLM entrenado desde cero** con datos exclusivos de CONAGUA.
 
-## Descripción General
+Intelligent chatbot for querying historical hydrometeorological data from CONAGUA (Mexico's National Water Commission) using natural language processing, powered by an **LLM trained from scratch** on exclusive CONAGUA data.
 
-**ConAIgua** es un sistema de consulta de información meteorológica que utiliza un **Large Language Model (LLM) propio**, entrenado íntegramente desde cero con datos históricos de CONAGUA (Comisión Nacional del Agua de México), combinado con **Retrieval-Augmented Generation (RAG)** para proporcionar respuestas precisas y contextuales en lenguaje natural.
+## Overview
 
-> **Importante**: El modelo de lenguaje utilizado en ConAIgua **no es un LLM externo ni preexistente** (no es GPT, Claude, LLaMA, ni ningún modelo de terceros). Es un modelo **diseñado, entrenado y optimizado desde cero** utilizando exclusivamente el dataset de CONAGUA, pipelines de procesamiento de datos meteorológicos y arquitecturas Transformer propias. Esto garantiza que el modelo tenga conocimiento profundo y especializado del dominio meteorológico mexicano.
+**ConAIgua** is a hydrometeorological data query system that uses a **custom Large Language Model (LLM)**, trained entirely from scratch on historical data from CONAGUA (Comisión Nacional del Agua de México), combined with **Retrieval-Augmented Generation (RAG)** to deliver precise and contextual answers in natural language.
 
-### ¿Qué problema resuelve?
+> ⚠️ **Important**: The language model used in ConAIgua is **not an external or pre-existing LLM** (it is not GPT, Claude, LLaMA, or any third-party model). It is a model **designed, trained, and optimized from scratch** using exclusively the CONAGUA dataset, meteorological data processing pipelines, and custom Transformer architectures. This ensures the model has deep, specialized knowledge of the Mexican hydrometeorological domain.
 
-Los datos meteorológicos históricos suelen estar en formatos poco accesibles (CSVs, bases de datos complejas). Este chatbot permite:
+### What problem does it solve?
 
-- **Consultas en lenguaje natural**: "¿Cuál fue la temperatura en Culiacán la semana pasada?"
-- **Análisis de datos meteorológicos**: Temperaturas, precipitación, humedad, viento, presión atmosférica
-- **Búsqueda semántica**: RAG sobre dataset CONAGUA para respuestas contextuales precisas
-- **Respuestas en tiempo real**: Interfaz web interactiva con streaming de respuestas
-- **Dominio especializado**: El LLM entiende terminología, estaciones y patrones climáticos mexicanos de forma nativa
+Historical meteorological data is often stored in inaccessible formats (CSVs, complex databases). This chatbot enables:
 
-### Arquitectura de Alto Nivel
+- **Natural language queries**: "What was the temperature in Culiacán last week?"
+- **Meteorological data analysis**: Temperature, precipitation, humidity, wind, atmospheric pressure
+- **Semantic search**: RAG over the CONAGUA dataset for precise, contextual responses
+- **Real-time responses**: Interactive web interface with response streaming
+- **Specialized domain**: The LLM natively understands Mexican meteorological terminology, stations, and climate patterns
+
+### High-Level Architecture
 
 ```
 ┌─────────────┐  HTTPS/WSS  ┌──────────────┐
@@ -47,382 +50,382 @@ Los datos meteorológicos históricos suelen estar en formatos poco accesibles (
                                 │
                                 ▼
                    ┌────────────────────────┐
-                   │  ConAIgua LLM (Propio) │
-                   │  Entrenado desde cero  │
-                   │  con datos CONAGUA     │
+                   │  ConAIgua LLM (Custom) │
+                   │  Trained from scratch  │
+                   │  on CONAGUA data       │
                    └────────────────────────┘
 ```
 
 ---
 
-## El LLM de ConAIgua: Modelo Propio Entrenado desde Cero
+## The ConAIgua LLM: Custom Model Trained from Scratch
 
-### ¿Por qué un LLM propio?
+### Why a custom LLM?
 
-A diferencia de sistemas que utilizan modelos genéricos (OpenAI, Anthropic, Meta, etc.), ConAIgua desarrolla su propio modelo de lenguaje entrenado exclusivamente con datos meteorológicos mexicanos. Esto permite:
+Unlike systems that rely on generic models (OpenAI, Anthropic, Meta, etc.), ConAIgua builds its own language model trained exclusively on Mexican meteorological data. This enables:
 
-- **Especialización total en el dominio**: El modelo comprende de forma nativa las estaciones CONAGUA, sus identificadores, regiones climáticas y patrones históricos de México
-- **Privacidad y soberanía de datos**: No se envía información a servicios externos
-- **Control total del modelo**: Ajuste fino, versionado y despliegue completamente controlados
-- **Sin dependencia de terceros**: No hay costos por API ni riesgos de discontinuidad de servicio
+- **Full domain specialization**: The model natively understands CONAGUA stations, their identifiers, climate regions, and Mexico's historical weather patterns
+- **Data privacy and sovereignty**: No information is sent to external services
+- **Complete model control**: Fine-tuning, versioning, and deployment fully under our control
+- **No third-party dependency**: No API costs and no risk of service discontinuation
 
-### Pipeline de Entrenamiento del LLM
+### LLM Training Pipeline
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│              PIPELINE DE ENTRENAMIENTO ConAIgua LLM             │
+│                  ConAIgua LLM TRAINING PIPELINE                 │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  1. INGESTA DE DATOS                                            │
-│  ┌─────────────────────────────────────────────────────────┐    │
-│  │  Dataset CONAGUA (CSV/Parquet)                          │    │
-│  │  • Estaciones meteorológicas (todo México)              │    │
-│  │  • Series históricas: temperatura, precipitación,       │    │
-│  │    humedad, viento, presión atmosférica                 │    │
-│  │  • Metadata: coordenadas, altitud, estado, municipio    │    │
-│  └──────────────────────────┬──────────────────────────────┘    │
+│  1. DATA INGESTION                                              │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │  CONAGUA Dataset (CSV/Parquet)                          │   │
+│  │  • Meteorological stations (all of Mexico)              │   │
+│  │  • Historical series: temperature, precipitation,       │   │
+│  │    humidity, wind, atmospheric pressure                 │   │
+│  │  • Metadata: coordinates, altitude, state, municipality │   │
+│  └──────────────────────────┬──────────────────────────────┘   │
 │                             │                                   │
-│  2. PREPROCESAMIENTO                                            │
-│  ┌──────────────────────────▼──────────────────────────────┐    │
-│  │  Pipeline de Limpieza y Normalización (Polars/Pandas)   │    │
-│  │  • Manejo de valores nulos e interpolación              │    │
-│  │  • Normalización de unidades y escalas                  │    │
-│  │  • Detección y corrección de outliers                   │    │
-│  │  • Tokenización de series temporales                    │    │
-│  │  • Conversión a formato texto estructurado              │    │
-│  └──────────────────────────┬──────────────────────────────┘    │
+│  2. PREPROCESSING                                               │
+│  ┌──────────────────────────▼──────────────────────────────┐   │
+│  │  Cleaning & Normalization Pipeline (Polars/Pandas)      │   │
+│  │  • Null value handling and interpolation                │   │
+│  │  • Unit and scale normalization                         │   │
+│  │  • Outlier detection and correction                     │   │
+│  │  • Time series tokenization                             │   │
+│  │  • Conversion to structured text format                 │   │
+│  └──────────────────────────┬──────────────────────────────┘   │
 │                             │                                   │
-│  3. CONSTRUCCIÓN DEL CORPUS                                     │
-│  ┌──────────────────────────▼──────────────────────────────┐    │
-│  │  Generación de Corpus de Entrenamiento                  │    │
-│  │  • Pares (pregunta, respuesta) sintéticos               │    │ 
-│  │  • Resúmenes descriptivos de series meteorológicas      │    │ 
-│  │  • Contexto geográfico y temporal enriquecido           │    │
-│  │  • Vocabulario especializado del dominio climático MX   │    │ 
-│  └──────────────────────────┬──────────────────────────────┘    │
+│  3. CORPUS BUILDING                                             │
+│  ┌──────────────────────────▼──────────────────────────────┐   │
+│  │  Training Corpus Generation                             │   │
+│  │  • Synthetic (question, answer) pairs                   │   │
+│  │  • Descriptive summaries of meteorological series       │   │
+│  │  • Enriched geographic and temporal context             │   │
+│  │  • Specialized vocabulary for the MX climate domain     │   │
+│  └──────────────────────────┬──────────────────────────────┘   │
 │                             │                                   │
-│  4. ENTRENAMIENTO DEL MODELO                                    │
-│  ┌──────────────────────────▼──────────────────────────────┐    │
-│  │  Arquitectura Transformer (desde cero)                  │    │
-│  │  • Pre-entrenamiento: Modelado de lenguaje causal (CLM) │    │
-│  │  • Fine-tuning supervisado: pares Q&A meteorológicos    │    │
-│  │  • RLHF opcional: feedback humano sobre respuestas      │    │
-│  │  • Framework: PyTorch + HuggingFace Trainer (interno)   │    │
-│  └──────────────────────────┬──────────────────────────────┘    │
+│  4. MODEL TRAINING                                              │
+│  ┌──────────────────────────▼──────────────────────────────┐   │
+│  │  Transformer Architecture (from scratch)                │   │
+│  │  • Pre-training: Causal Language Modeling (CLM)         │   │
+│  │  • Supervised fine-tuning: meteorological Q&A pairs     │   │
+│  │  • Optional RLHF: human feedback on responses           │   │
+│  │  • Framework: PyTorch + HuggingFace Trainer (internal)  │   │
+│  └──────────────────────────┬──────────────────────────────┘   │
 │                             │                                   │
-│  5. EVALUACIÓN Y VALIDACIÓN                                     │
-│  ┌──────────────────────────▼──────────────────────────────┐    │
-│  │  Métricas de Calidad                                    │    │
-│  │  • Perplexity sobre corpus de validación CONAGUA        │    │
-│  │  • BLEU / ROUGE en respuestas de referencia             │    │
-│  │  • Evaluación humana de precisión meteorológica         │    │
-│  │  • Benchmarks de latencia y throughput                  │    │ 
-│  └──────────────────────────┬──────────────────────────────┘    │
+│  5. EVALUATION & VALIDATION                                     │
+│  ┌──────────────────────────▼──────────────────────────────┐   │
+│  │  Quality Metrics                                        │   │
+│  │  • Perplexity on CONAGUA validation corpus              │   │
+│  │  • BLEU / ROUGE on reference responses                  │   │
+│  │  • Human evaluation of meteorological accuracy          │   │
+│  │  • Latency and throughput benchmarks                    │   │
+│  └──────────────────────────┬──────────────────────────────┘   │
 │                             │                                   │
-│  6. DESPLIEGUE                                                  │
-│  ┌──────────────────────────▼──────────────────────────────┐    │
-│  │  Serving del Modelo                                     │    │
-│  │  • Exportación a ONNX o TorchScript                     │    │
-│  │  • Quantización INT8/FP16 para eficiencia               │    │
-│  │  • Serving via API REST interna (Rust ↔ Python bridge)  │    │
-│  │  • Versionado de modelos con MLflow                     │    │
-│  └─────────────────────────────────────────────────────────┘    │
+│  6. DEPLOYMENT                                                  │
+│  ┌──────────────────────────▼──────────────────────────────┐   │
+│  │  Model Serving                                          │   │
+│  │  • Export to ONNX or TorchScript                        │   │
+│  │  • INT8/FP16 quantization for efficiency                │   │
+│  │  • Serving via internal REST API (Rust ↔ Python bridge) │   │
+│  │  • Model versioning with MLflow                         │   │
+│  └─────────────────────────────────────────────────────────┘   │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### Estructura del Dataset CONAGUA
+### CONAGUA Dataset Structure
 
-| Campo | Descripción | Tipo |
+| Field | Description | Type |
 |---|---|---|
-| `station_id` | Identificador único de estación | String |
-| `state` | Estado de la República Mexicana | String |
-| `municipality` | Municipio de la estación | String |
-| `latitude / longitude` | Coordenadas geográficas | Float |
-| `altitude_m` | Altitud sobre el nivel del mar | Float |
-| `date` | Fecha de la observación | Date |
-| `temp_max_c` | Temperatura máxima (°C) | Float |
-| `temp_min_c` | Temperatura mínima (°C) | Float |
-| `temp_avg_c` | Temperatura promedio (°C) | Float |
-| `precipitation_mm` | Precipitación acumulada (mm) | Float |
-| `humidity_pct` | Humedad relativa (%) | Float |
-| `wind_speed_kmh` | Velocidad del viento (km/h) | Float |
-| `wind_direction` | Dirección del viento | String |
-| `atmospheric_pressure_hpa` | Presión atmosférica (hPa) | Float |
-| `evaporation_mm` | Evaporación (mm) | Float |
+| `station_id` | Unique station identifier | String |
+| `state` | Mexican state | String |
+| `municipality` | Station municipality | String |
+| `latitude / longitude` | Geographic coordinates | Float |
+| `altitude_m` | Altitude above sea level | Float |
+| `date` | Observation date | Date |
+| `temp_max_c` | Maximum temperature (°C) | Float |
+| `temp_min_c` | Minimum temperature (°C) | Float |
+| `temp_avg_c` | Average temperature (°C) | Float |
+| `precipitation_mm` | Accumulated precipitation (mm) | Float |
+| `humidity_pct` | Relative humidity (%) | Float |
+| `wind_speed_kmh` | Wind speed (km/h) | Float |
+| `wind_direction` | Wind direction | String |
+| `atmospheric_pressure_hpa` | Atmospheric pressure (hPa) | Float |
+| `evaporation_mm` | Evaporation (mm) | Float |
 
-### Pipelines de Datos
+### Data Pipelines
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│                    PIPELINES DE DATOS                        │
+│                        DATA PIPELINES                        │
 ├──────────────────────────────────────────────────────────────┤
 │                                                              │
 │  Pipeline 1: ETL (Extract, Transform, Load)                  │
-│  ┌────────────┐   ┌──────────────┐   ┌──────────────────┐    │
-│  │ Raw CSV    │ → │  Polars      │ → │  PostgreSQL /    │    │
-│  │ CONAGUA    │   │  Transform   │   │  Parquet Store   │    │
-│  └────────────┘   └──────────────┘   └──────────────────┘    │
+│  ┌────────────┐   ┌──────────────┐   ┌──────────────────┐   │
+│  │ Raw CSV    │ → │  Polars      │ → │  PostgreSQL /    │   │
+│  │ CONAGUA    │   │  Transform   │   │  Parquet Store   │   │
+│  └────────────┘   └──────────────┘   └──────────────────┘   │
 │                                                              │
-│  Pipeline 2: Embedding para RAG                              │
-│  ┌────────────┐   ┌──────────────┐   ┌──────────────────┐    │
-│  │ Datos      │ → │  Tokenizer   │ → │  Qdrant Vector   │    │
-│  │ limpios    │   │  + Encoder   │   │  DB (embeddings) │    │
-│  └────────────┘   └──────────────┘   └──────────────────┘    │
+│  Pipeline 2: Embedding for RAG                               │
+│  ┌────────────┐   ┌──────────────┐   ┌──────────────────┐   │
+│  │  Clean     │ → │  Tokenizer   │ → │  Qdrant Vector   │   │
+│  │  data      │   │  + Encoder   │   │  DB (embeddings) │   │
+│  └────────────┘   └──────────────┘   └──────────────────┘   │
 │                                                              │
-│  Pipeline 3: Entrenamiento continuo                          │
-│  ┌────────────┐   ┌──────────────┐   ┌──────────────────┐    │
-│  │ Nuevos     │ → │  Fine-tuning │ → │  Model Registry  │    │
-│  │ datos      │   │  incremental │   │  (MLflow)        │    │
-│  └────────────┘   └──────────────┘   └──────────────────┘    │
+│  Pipeline 3: Continuous Training                             │
+│  ┌────────────┐   ┌──────────────┐   ┌──────────────────┐   │
+│  │  New       │ → │  Incremental │ → │  Model Registry  │   │
+│  │  data      │   │  fine-tuning │   │  (MLflow)        │   │
+│  └────────────┘   └──────────────┘   └──────────────────┘   │
 │                                                              │
 └──────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Características Principales
+## Key Features
 
-### Inteligencia Artificial
-- **LLM Propio (ConAIgua Model)**: Modelo Transformer entrenado desde cero con datos CONAGUA — sin dependencia de APIs externas
-- **RAG (Retrieval-Augmented Generation)**: Búsqueda semántica en dataset CONAGUA para enriquecer respuestas con datos precisos
-- **Embeddings Vectoriales**: Qdrant para búsqueda eficiente de contexto meteorológico
-- **Streaming de Respuestas**: WebSocket para respuestas en tiempo real
-- **Entrenamiento Continuo**: Pipeline para re-entrenamiento con nuevos datos CONAGUA
+### Artificial Intelligence
+- **Custom LLM (ConAIgua Model)**: Transformer model trained from scratch on CONAGUA data — no dependency on external APIs
+- **RAG (Retrieval-Augmented Generation)**: Semantic search over the CONAGUA dataset to enrich responses with precise data
+- **Vector Embeddings**: Qdrant for efficient meteorological context retrieval
+- **Response Streaming**: WebSocket for real-time responses
+- **Continuous Training**: Pipeline for retraining with new CONAGUA data
 
 ### Frontend (React + Next.js)
-- **Server-Side Rendering (SSR)**: Carga inicial rápida y SEO optimizado
-- **Static Site Generation (SSG)**: Páginas estáticas para contenido no dinámico
-- **App Router**: Enrutamiento moderno con layouts anidados (Next.js 14+)
-- **React Server Components**: Reducción del bundle JS en el cliente
-- **API Routes**: Backend-for-Frontend integrado en Next.js
+- **Server-Side Rendering (SSR)**: Fast initial load and optimized SEO
+- **Static Site Generation (SSG)**: Static pages for non-dynamic content
+- **App Router**: Modern routing with nested layouts (Next.js 14+)
+- **React Server Components**: Reduced client-side JS bundle
+- **API Routes**: Backend-for-Frontend integrated in Next.js
 
-### Datos Meteorológicos
-- **Dataset CONAGUA**: Datos históricos de estaciones meteorológicas de toda la República Mexicana
-- **Múltiples Métricas**: Temperatura, precipitación, humedad, viento, presión, evaporación
-- **Consultas Temporales**: Rangos de fechas, agregaciones, tendencias y anomalías
+### Meteorological Data
+- **CONAGUA Dataset**: Historical data from weather stations across Mexico
+- **Multiple Metrics**: Temperature, precipitation, humidity, wind, pressure, evaporation
+- **Temporal Queries**: Date ranges, aggregations, trends, and anomalies
 
-### Seguridad
-- **Microsegmentación**: Aislamiento de componentes con Network Policies
-- **Zero Trust Architecture**: Autenticación y autorización en cada capa
-- **Cifrado**: TLS 1.3 en tránsito, AES-256 en reposo
-- **JWT Authentication**: Tokens RS256 con rotación automática
-- **WAF**: Protección contra OWASP Top 10
-- **Auditoría**: Logging completo con integración SIEM
+### Security
+- **Microsegmentation**: Component isolation with Network Policies
+- **Zero Trust Architecture**: Authentication and authorization at every layer
+- **Encryption**: TLS 1.3 in transit, AES-256 at rest
+- **JWT Authentication**: RS256 tokens with automatic rotation
+- **WAF**: OWASP Top 10 protection
+- **Auditing**: Full structured logging with SIEM integration
 
 ### Performance
-- **Cache Inteligente**: Redis para sesiones y resultados frecuentes
-- **Async/Await**: Backend completamente asíncrono en Rust
-- **Connection Pooling**: Optimización de conexiones a bases de datos
-- **Rate Limiting**: Prevención de abuso
-- **Model Quantization**: INT8/FP16 para inferencia eficiente del LLM propio
+- **Smart Cache**: Redis for sessions and frequent results
+- **Async/Await**: Fully asynchronous backend in Rust
+- **Connection Pooling**: Optimized database connections
+- **Rate Limiting**: Abuse prevention
+- **Model Quantization**: INT8/FP16 for efficient LLM inference
 
 ---
 
-## Arquitectura del Sistema
+## System Architecture
 
-### Arquitectura Hexagonal (Ports & Adapters)
+### Hexagonal Architecture (Ports & Adapters)
 
-El proyecto sigue los principios de **Arquitectura Hexagonal** (también conocida como Ports and Adapters), lo que garantiza:
+The project follows **Hexagonal Architecture** principles (also known as Ports and Adapters), ensuring:
 
-- **Separación de Concerns**: Lógica de negocio independiente de frameworks
-- **Testabilidad**: Fácil creación de tests unitarios y de integración
-- **Flexibilidad**: Cambio de tecnologías sin afectar la lógica core
-- **Mantenibilidad**: Código organizado y escalable
+- **Separation of Concerns**: Business logic independent of frameworks
+- **Testability**: Easy creation of unit and integration tests
+- **Flexibility**: Technology changes without affecting core logic
+- **Maintainability**: Organized and scalable codebase
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                   HEXAGONAL ARCHITECTURE                    │
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │              ADAPTERS (Infrastructure)               │   │
-│  │                                                      │   │
-│  │   ┌─────────────┐          ┌─────────────┐           │   │
-│  │   │  REST API   │          │  WebSocket  │           │   │
-│  │   │   (Axum)    │          │   (Axum)    │           │   │
-│  │   └──────┬──────┘          └──────┬──────┘           │   │
-│  └─────────┼────────────────────────│───────────────────┘   │ 
-│            │                        │                       │
-│            │      PRIMARY PORTS (Input)                     │
-│            ▼                        ▼                       │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │                    DOMAIN CORE                       │   │
-│  │                                                      │   │
-│  │  ┌────────────────────────────────────────────────┐  │   │
-│  │  │       Application Services (Use Cases)         │  │   │
-│  │  │       • ChatOrchestrator                       │  │   │
-│  │  │       • AuthenticationService                  │  │   │
-│  │  │       • SessionManager                         │  │   │
-│  │  └────────────────────────────────────────────────┘  │   │
-│  │                                                      │   │
-│  │  ┌────────────────────────────────────────────────┐  │   │
-│  │  │        Domain Logic (Business Rules)           │  │   │
-│  │  │        • IntentParser                          │  │   │
-│  │  │        • RAGService                            │  │   │ 
-│  │  │        • ConAIguaLLMService (modelo propio)    │  │   │
-│  │  └────────────────────────────────────────────────┘  │   │
-│  │                                                      │   │ 
-│  │  ┌────────────────────────────────────────────────┐  │   │
-│  │  │        Domain Entities (Models)                │  │   │
-│  │  │        • User, Session, Message                │  │   │
-│  │  │        • ChatContext, EmbeddingVector          │  │   │
-│  │  └────────────────────────────────────────────────┘  │   │
-│  └───────────────────────┬──────────────────────────────┘   │ 
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │              ADAPTERS (Infrastructure)               │  │
+│  │                                                      │  │
+│  │   ┌─────────────┐          ┌─────────────┐          │  │
+│  │   │  REST API   │          │  WebSocket  │          │  │
+│  │   │   (Axum)    │          │   (Axum)    │          │  │
+│  │   └──────┬──────┘          └──────┬──────┘          │  │
+│  └─────────┼────────────────────────│───────────────────┘  │
+│            │                        │                      │
+│            │      PRIMARY PORTS (Input)                    │
+│            ▼                        ▼                      │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │                    DOMAIN CORE                       │  │
+│  │                                                      │  │
+│  │  ┌────────────────────────────────────────────────┐  │  │
+│  │  │       Application Services (Use Cases)         │  │  │
+│  │  │       • ChatOrchestrator                       │  │  │
+│  │  │       • AuthenticationService                  │  │  │
+│  │  │       • SessionManager                         │  │  │
+│  │  └────────────────────────────────────────────────┘  │  │
+│  │                                                      │  │
+│  │  ┌────────────────────────────────────────────────┐  │  │
+│  │  │        Domain Logic (Business Rules)           │  │  │
+│  │  │        • IntentParser                          │  │  │
+│  │  │        • RAGService                            │  │  │
+│  │  │        • ConAIguaLLMService (custom model)     │  │  │
+│  │  └────────────────────────────────────────────────┘  │  │
+│  │                                                      │  │
+│  │  ┌────────────────────────────────────────────────┐  │  │
+│  │  │        Domain Entities (Models)                │  │  │
+│  │  │        • User, Session, Message                │  │  │
+│  │  │        • ChatContext, EmbeddingVector           │  │  │
+│  │  └────────────────────────────────────────────────┘  │  │
+│  └───────────────────────┬──────────────────────────────┘  │
 │                          │                                  │
-│            SECONDARY PORTS (Output)                         │
+│            SECONDARY PORTS (Output)                        │
 │                          ▼                                  │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │              ADAPTERS (Infrastructure)               │   │
-│  │                                                      │   │
-│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────┐     │   │
-│  │  │PostgreSQL│ │ MongoDB  │ │  Qdrant  │ │Redis │     │   │
-│  │  │Repository│ │Repository│ │Repository│ │Cache │     │   │
-│  │  └──────────┘ └──────────┘ └──────────┘ └──────┘     │   │
-│  │                                                      │   │
-│  │  ┌──────────────────────┐  ┌────────────────────┐    │   │
-│  │  │ ConAIgua LLM Client  │  │ CONAGUA DataFrame  │    │   │
-│  │  │ (modelo propio,      │  │ (Polars/Pandas)    │    │   │
-│  │  │  servido localmente) │  │                    │    │   │
-│  │  └──────────────────────┘  └────────────────────┘    │   │
-│  └──────────────────────────────────────────────────────┘   │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │              ADAPTERS (Infrastructure)               │  │
+│  │                                                      │  │
+│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────┐   │  │
+│  │  │PostgreSQL│ │ MongoDB  │ │  Qdrant  │ │Redis │   │  │
+│  │  │Repository│ │Repository│ │Repository│ │Cache │   │  │
+│  │  └──────────┘ └──────────┘ └──────────┘ └──────┘   │  │
+│  │                                                      │  │
+│  │  ┌──────────────────────┐  ┌────────────────────┐   │  │
+│  │  │ ConAIgua LLM Client  │  │ CONAGUA DataFrame  │   │  │
+│  │  │ (custom model,       │  │ (Polars/Pandas)    │   │  │
+│  │  │  served locally)     │  │                    │   │  │
+│  │  └──────────────────────┘  └────────────────────┘   │  │
+│  └──────────────────────────────────────────────────────┘  │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-#### Ventajas de esta Arquitectura
+#### Architecture Advantages
 
-1. **Domain-Driven Design (DDD)**: La lógica de negocio es el núcleo
-2. **Dependency Inversion**: Las dependencias apuntan hacia el dominio
-3. **Plug & Play**: Fácil versionado del LLM propio sin afectar la lógica de negocio
-4. **Testing**: Mocks simples de puertos para testing unitario
-5. **Clean Code**: Separación clara de responsabilidades
+1. **Domain-Driven Design (DDD)**: Business logic is the core
+2. **Dependency Inversion**: Dependencies point toward the domain
+3. **Plug & Play**: Easy LLM versioning without affecting business logic
+4. **Testing**: Simple port mocks for unit testing
+5. **Clean Code**: Clear separation of responsibilities
 
-### Microsegmentación y Seguridad
+### Microsegmentation & Security
 
-El sistema implementa **microsegmentación** siguiendo el modelo **Zero Trust**:
+The system implements **microsegmentation** following the **Zero Trust** model:
 
 ```
 ┌───────────────────────────────────────────────────────────┐
-│  SEGMENTO 1: Autenticación                                │
+│  SEGMENT 1: Authentication                                │
 │  • Auth Service, Session Manager                          │
-│  • Acceso: PostgreSQL:5432, Redis:6379                    │
-│  • Bloqueado: MongoDB, Qdrant, LLM Service, Internet      │
+│  • Access: PostgreSQL:5432, Redis:6379                    │
+│  • Blocked: MongoDB, Qdrant, LLM Service, Internet        │
 └───────────────────────────────────────────────────────────┘
 ┌───────────────────────────────────────────────────────────┐
-│  SEGMENTO 2: Backend Services                             │
+│  SEGMENT 2: Backend Services                              │
 │  • Chat Orchestrator, RAG, ConAIgua LLM Service           │
-│  • Acceso: MongoDB:27017, Qdrant:6333, LLM Service:8080   │
-│  • Bloqueado: PostgreSQL (solo Auth puede), Internet      │
+│  • Access: MongoDB:27017, Qdrant:6333, LLM Service:8080   │
+│  • Blocked: PostgreSQL (Auth only), Internet              │
 └───────────────────────────────────────────────────────────┘
 ┌───────────────────────────────────────────────────────────┐
-│  SEGMENTO 3: LLM Inference                                │
+│  SEGMENT 3: LLM Inference                                 │
 │  • ConAIgua Model Server (PyTorch / ONNX Runtime)         │
-│  • Acceso: Solo desde Backend Services                    │
-│  • Sin acceso a Internet ni a bases de datos              │
+│  • Access: Backend Services only                          │
+│  • No Internet access, no database access                 │
 └───────────────────────────────────────────────────────────┘
 ┌───────────────────────────────────────────────────────────┐
-│  SEGMENTO 4: Data Layer                                   │
+│  SEGMENT 4: Data Layer                                    │
 │  • PostgreSQL, MongoDB, Qdrant, Redis                     │
-│  • Firewall interno con IP whitelisting                   │
-│  • Acceso: Solo servicios autorizados por puerto          │
+│  • Internal firewall with IP whitelisting                 │
+│  • Access: Authorized services per port only              │
 └───────────────────────────────────────────────────────────┘
 ```
 
-**Implementación**: Kubernetes Network Policies o AWS Security Groups
+**Implementation**: Kubernetes Network Policies or AWS Security Groups
 
-### Diagramas C4
+### C4 Diagrams
 
-El proyecto incluye documentación completa siguiendo el modelo **C4** (Context, Containers, Components, Code):
+The project includes full documentation following the **C4 model** (Context, Containers, Components, Code):
 
-- **Nivel 1 - Contexto**: Vista general del sistema y actores
-- **Nivel 2 - Contenedores**: Aplicaciones y bases de datos
-- **Nivel 3 - Componentes**: Detalle interno del API Backend y del pipeline LLM
-- **Vista de Datos**: Estructura de almacenamiento y dataset CONAGUA
-- **Vista de Seguridad**: Capas de seguridad y microsegmentación
+- **Level 1 - Context**: System overview and actors
+- **Level 2 - Containers**: Applications and databases
+- **Level 3 - Components**: Internal detail of the API Backend and LLM pipeline
+- **Data View**: Storage structure and CONAGUA dataset
+- **Security View**: Security layers and microsegmentation
 
-Ver carpeta `/docs/architecture/` para diagramas completos.
+See the `/docs/architecture/` folder for complete diagrams.
 
-### Bases de Datos
+### Databases
 
-| Tecnología | Uso | Tipo |
+| Technology | Usage | Type |
 |---|---|---|
-| **PostgreSQL** | Usuarios, sesiones, auditoría | Relacional |
-| **MongoDB** | Historial de conversaciones | Documental |
-| **Qdrant** | Embeddings vectoriales (RAG) | Vectorial |
-| **Redis** | Cache, rate limiting | En memoria |
+| **PostgreSQL** | Users, sessions, audit logs | Relational |
+| **MongoDB** | Conversation history | Document |
+| **Qdrant** | Vector embeddings (RAG) | Vector |
+| **Redis** | Cache, rate limiting | In-memory |
 
-### Stack Tecnológico Completo
+### Full Technology Stack
 
-| Capa | Tecnología | Notas |
+| Layer | Technology | Notes |
 |---|---|---|
 | **Frontend** | React 18 + Next.js 14 | App Router, SSR, RSC |
-| **Backend API** | Rust (Axum) | Async, alto rendimiento |
-| **LLM** | PyTorch + Transformer propio | Entrenado desde cero con CONAGUA |
-| **RAG** | Qdrant + embeddings propios | Vectores del modelo ConAIgua |
-| **Data Pipeline** | Polars / Pandas | ETL del dataset CONAGUA |
-| **Model Serving** | ONNX Runtime / TorchServe | Inferencia optimizada local |
-| **BD Relacional** | PostgreSQL | Usuarios y sesiones |
-| **BD Documental** | MongoDB | Historial de chat |
-| **Cache** | Redis | Sesiones y rate limiting |
-| **Infraestructura** | Docker + Kubernetes | Contenedorización y orquestación |
-| **Reverse Proxy** | Nginx | Load balancing y TLS |
-| **MLOps** | MLflow | Versionado del modelo LLM |
+| **Backend API** | Rust (Axum) | Async, high performance |
+| **LLM** | PyTorch + custom Transformer | Trained from scratch on CONAGUA |
+| **RAG** | Qdrant + custom embeddings | ConAIgua model vectors |
+| **Data Pipeline** | Polars / Pandas | CONAGUA dataset ETL |
+| **Model Serving** | ONNX Runtime / TorchServe | Optimized local inference |
+| **Relational DB** | PostgreSQL | Users and sessions |
+| **Document DB** | MongoDB | Chat history |
+| **Cache** | Redis | Sessions and rate limiting |
+| **Infrastructure** | Docker + Kubernetes | Containerization and orchestration |
+| **Reverse Proxy** | Nginx | Load balancing and TLS |
+| **MLOps** | MLflow | LLM model versioning |
 
-### Infraestructura
+### Infrastructure
 
-- **Docker** + **Docker Compose**: Contenedorización
-- **Kubernetes** (opcional): Orquestación y Network Policies
-- **Nginx**: Reverse proxy y load balancing
-- **Let's Encrypt**: Certificados SSL/TLS
-- **MLflow**: Registry y versionado del modelo ConAIgua LLM
+- **Docker** + **Docker Compose**: Containerization
+- **Kubernetes** (optional): Orchestration and Network Policies
+- **Nginx**: Reverse proxy and load balancing
+- **Let's Encrypt**: SSL/TLS certificates
+- **MLflow**: ConAIgua LLM model registry and versioning
 
 ---
 
-## Seguridad
+## Security
 
-### Controles Implementados
+### Implemented Controls
 
-#### Capa de Red
-- Firewall perimetral con IPS/IDS
+#### Network Layer
+- Perimeter firewall with IPS/IDS
 - WAF (Web Application Firewall)
 - DDoS protection
-- TLS 1.3 obligatorio
-- Geo-blocking opcional
+- Mandatory TLS 1.3
+- Optional geo-blocking
 
-#### Autenticación y Autorización
-- JWT con RS256 (asimétrico)
-- Argon2 para passwords (cost factor 12)
+#### Authentication & Authorization
+- JWT with RS256 (asymmetric)
+- Argon2 for passwords (cost factor 12)
 - Refresh token rotation
 - RBAC (Role-Based Access Control)
-- Session timeout configurable
-- MFA opcional (TOTP)
+- Configurable session timeout
+- Optional MFA (TOTP)
 
-#### Protección de Aplicación
+#### Application Protection
 - Input sanitization
 - SQL/NoSQL injection prevention
 - XSS protection (CSP headers)
 - CSRF tokens
-- Rate limiting por usuario/IP
+- Per-user/IP rate limiting
 - Request size limits
 
-#### Datos
+#### Data
 - Encryption at rest (AES-256)
 - Encryption in transit (TLS)
-- Secrets management (Vault/AWS Secrets)
+- Secrets management (Vault / AWS Secrets)
 - Backup encryption
-- Data masking en logs
+- Data masking in logs
 
-#### Microsegmentación
-- Network Policies (K8s) o Security Groups (AWS)
-- Aislamiento por segmento (incluyendo segmento dedicado para el LLM)
+#### Microsegmentation
+- Network Policies (K8s) or Security Groups (AWS)
+- Per-segment isolation (including dedicated LLM segment)
 - Default Deny
 - Least privilege access
 
-### Auditoría y Compliance
-- Logging estructurado (JSON)
+### Auditing & Compliance
+- Structured logging (JSON)
 - SIEM integration
-- Alertas de seguridad
+- Security alerts
 - Compliance: GDPR, SOC2
 
 ---
