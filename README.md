@@ -9,7 +9,7 @@
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)
 ![Status](https://img.shields.io/badge/status-in%20development-yellow.svg)
 
-🌐 [Versión en Español](README.md)
+🌐 [Versión en Español](README.es.md)
 
 </div>
 
