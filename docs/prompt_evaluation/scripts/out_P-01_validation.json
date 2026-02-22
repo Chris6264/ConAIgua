@@ -1,0 +1,13 @@
+{
+  "prompt_id": "P-01",
+  "prompt_version": "v1.0",
+  "model_id": "ConAIgua-LLM-v1",
+  "runs": 10,
+  "schema": "P-01",
+  "json_parse_failures": 0,
+  "avg_precision_structural_score_0_5": 5.0,
+  "per_run": [
+    { "run": 1, "json_ok": true, "validation": { "schema": "P-01", "required_keys_ok": true, "missing_required_keys": [], "no_extra_keys_ok": true, "extra_keys": [], "metodo_calculo_ok": true, "metodo_calculo_note": "", "numeric_fields_issues": [], "percent_fields_issues": [], "precision_structural_score_0_5": 5.0 } }
+  ],
+  "notes": "Validación estructural; no valida cálculos numéricos reales (solo forma y reglas básicas)."
+}
