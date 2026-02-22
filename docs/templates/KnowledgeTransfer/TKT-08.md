@@ -28,36 +28,6 @@ Se enfoca en selección informada de modelos.
 ---
 
 ## 3. Estructura Formal del Prompt
-# TKT-08 — Comparación Crítica entre Modelos Estadísticos
-
-## 1. Información General
-
-| Campo | Descripción |
-|-------|------------|
-| Template ID | TKT-08 |
-| Nombre | Comparación Crítica entre Modelos Estadísticos |
-| Categoría | Transferencia de Conocimiento |
-| Relacionado con | P-07, P-11, P-18, P-20 |
-| Dominio | Datos hidrometeorológicos CONAGUA |
-| Objetivo | Comparar críticamente dos o más modelos estadísticos y evaluar su adecuación |
-
----
-
-## 2. Objetivo del Template
-
-Este template permite que un modelo de lenguaje:
-
-- Compare metodológicamente dos o más modelos.
-- Analice diferencias en supuestos.
-- Evalúe métricas de desempeño (R², MAE, RMSE, etc.).
-- Determine fortalezas y debilidades.
-- Recomiende el modelo más adecuado según contexto.
-
-Se enfoca en selección informada de modelos.
-
----
-
-## 3. Estructura Formal del Prompt
 Actúa como un especialista en modelado estadístico y climatología.
 
 Tu tarea es comparar críticamente los siguientes modelos:
