@@ -1,0 +1,16 @@
+{
+  "prompt_id": "P-01",
+  "prompt_version": "v1.0",
+  "model_id": "ConAIgua-LLM-v1",
+  "runs": 10,
+  "similarity": {
+    "pairwise_avg_jaccard": 0.8231,
+    "pairwise_min_jaccard": 0.6769
+  },
+  "structure": {
+    "avg_heading_overlap": 1.0,
+    "missing_required_sections": []
+  },
+  "stability_score_0_5": 4.02,
+  "notes": "Jaccard token-level (proxy semántico) + overlap de headings (proxy estructural)."
+}
