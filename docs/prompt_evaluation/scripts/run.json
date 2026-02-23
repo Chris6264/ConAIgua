@@ -1,18 +1,268 @@
 {
-  "prompt_id": "P-01",
-  "prompt_version": "v1.0",
-  "model_id": "ConAIgua-LLM-v1",
-  "runs": 10,
-  "outputs": [
-    "{\"estacion_id\":\"25164\",\"nombre_estacion\":\"ALTO DE CULIACANCITO\",\"municipio\":\"CULIACAN\",\"estado\":\"SINALOA\",\"situacion_estacion\":\"SUSPENDIDA\",\"año\":\"1978\",\"precipitacion_total_mm\":\"842.3\",\"dias_con_registro\":\"360\",\"cobertura_datos\":\"98.6%\",\"metodo_calculo\":\"Suma anual de registros diarios oficiales CONAGUA\",\"notas\":\"Se excluyeron 5 registros con valor 'Nulo'.\"}",
-    "{\"estacion_id\":\"25164\",\"nombre_estacion\":\"ALTO DE CULIACANCITO\",\"municipio\":\"CULIACAN\",\"estado\":\"SINALOA\",\"situacion_estacion\":\"SUSPENDIDA\",\"año\":\"1978\",\"precipitacion_total_mm\":\"842.3\",\"dias_con_registro\":\"360\",\"cobertura_datos\":\"98.6%\",\"metodo_calculo\":\"Suma anual de registros diarios oficiales CONAGUA\",\"notas\":\"Se excluyeron 5 registros 'Nulo'.\"}",
-    "{\"estacion_id\":\"25164\",\"nombre_estacion\":\"ALTO DE CULIACANCITO\",\"municipio\":\"CULIACAN\",\"estado\":\"SINALOA\",\"situacion_estacion\":\"SUSPENDIDA\",\"año\":\"1978\",\"precipitacion_total_mm\":\"842.3\",\"dias_con_registro\":\"360\",\"cobertura_datos\":\"98.6%\",\"metodo_calculo\":\"Suma anual de registros diarios oficiales CONAGUA\",\"notas\":\"Sin datos adicionales.\"}",
-    "{\"estacion_id\":\"25164\",\"nombre_estacion\":\"ALTO DE CULIACANCITO\",\"municipio\":\"CULIACAN\",\"estado\":\"SINALOA\",\"situacion_estacion\":\"SUSPENDIDA\",\"año\":\"1978\",\"precipitacion_total_mm\":\"842.3\",\"dias_con_registro\":\"360\",\"cobertura_datos\":\"98.6%\",\"metodo_calculo\":\"Suma anual de registros diarios oficiales CONAGUA\",\"notas\":\"Se excluyeron registros con 'Nulo'.\"}",
-    "{\"estacion_id\":\"25164\",\"nombre_estacion\":\"ALTO DE CULIACANCITO\",\"municipio\":\"CULIACAN\",\"estado\":\"SINALOA\",\"situacion_estacion\":\"SUSPENDIDA\",\"año\":\"1978\",\"precipitacion_total_mm\":\"842.3\",\"dias_con_registro\":\"360\",\"cobertura_datos\":\"98.6%\",\"metodo_calculo\":\"Suma anual de registros diarios oficiales CONAGUA\",\"notas\":\"Cobertura calculada como días válidos / 365.\"}",
-    "{\"estacion_id\":\"25164\",\"nombre_estacion\":\"ALTO DE CULIACANCITO\",\"municipio\":\"CULIACAN\",\"estado\":\"SINALOA\",\"situacion_estacion\":\"SUSPENDIDA\",\"año\":\"1978\",\"precipitacion_total_mm\":\"842.3\",\"dias_con_registro\":\"360\",\"cobertura_datos\":\"98.6%\",\"metodo_calculo\":\"Suma anual de registros diarios oficiales CONAGUA\",\"notas\":\"Se omitieron valores Nulo; 0 es válido.\"}",
-    "{\"estacion_id\":\"25164\",\"nombre_estacion\":\"ALTO DE CULIACANCITO\",\"municipio\":\"CULIACAN\",\"estado\":\"SINALOA\",\"situacion_estacion\":\"SUSPENDIDA\",\"año\":\"1978\",\"precipitacion_total_mm\":\"842.3\",\"dias_con_registro\":\"360\",\"cobertura_datos\":\"98.6%\",\"metodo_calculo\":\"Suma anual de registros diarios oficiales CONAGUA\",\"notas\":\"Estación suspendida reportada en notas.\"}",
-    "{\"estacion_id\":\"25164\",\"nombre_estacion\":\"ALTO DE CULIACANCITO\",\"municipio\":\"CULIACAN\",\"estado\":\"SINALOA\",\"situacion_estacion\":\"SUSPENDIDA\",\"año\":\"1978\",\"precipitacion_total_mm\":\"842.3\",\"dias_con_registro\":\"360\",\"cobertura_datos\":\"98.6%\",\"metodo_calculo\":\"Suma anual de registros diarios oficiales CONAGUA\",\"notas\":\"Sin observaciones críticas.\"}",
-    "{\"estacion_id\":\"25164\",\"nombre_estacion\":\"ALTO DE CULIACANCITO\",\"municipio\":\"CULIACAN\",\"estado\":\"SINALOA\",\"situacion_estacion\":\"SUSPENDIDA\",\"año\":\"1978\",\"precipitacion_total_mm\":\"842.3\",\"dias_con_registro\":\"360\",\"cobertura_datos\":\"98.6%\",\"metodo_calculo\":\"Suma anual de registros diarios oficiales CONAGUA\",\"notas\":\"Los registros con 'Nulo' fueron excluidos.\"}",
-    "{\"estacion_id\":\"25164\",\"nombre_estacion\":\"ALTO DE CULIACANCITO\",\"municipio\":\"CULIACAN\",\"estado\":\"SINALOA\",\"situacion_estacion\":\"SUSPENDIDA\",\"año\":\"1978\",\"precipitacion_total_mm\":\"842.3\",\"dias_con_registro\":\"360\",\"cobertura_datos\":\"98.6%\",\"metodo_calculo\":\"Suma anual de registros diarios oficiales CONAGUA\",\"notas\":\"Cálculo anual a partir de registros diarios.\"}"
+  "modelo": "ConAIgua-LLM-v1",
+  "version": "v1.0",
+  "ejecuciones_por_prompt": 10,
+  "nota_reproducibilidad": "Los valores numéricos son idénticos en las 10 ejecuciones de cada prompt. Las variaciones entre runs se limitan al campo 'notas'.",
+  "estacion": {
+    "id": "25164",
+    "nombre": "ALTO DE CULIACANCITO",
+    "municipio": "CULIACAN",
+    "estado": "SINALOA",
+    "situacion": "SUSPENDIDA"
+  },
+  "resultados": [
+    {
+      "prompt_id": "P-01",
+      "descripcion": "Precipitación Total Anual",
+      "año": "1978",
+      "precipitacion_total_mm": 842.3,
+      "dias_con_registro": 360,
+      "cobertura_datos": "98.6%",
+      "metodo_calculo": "Suma anual de registros diarios oficiales CONAGUA",
+      "notas": "Se excluyeron 5 registros con valor 'Nulo'. El valor 0 se considera válido."
+    },
+    {
+      "prompt_id": "P-02",
+      "descripcion": "Temperatura Máxima Promedio Anual (TMAX)",
+      "año": "1978",
+      "tmax_promedio_anual_c": 30.4,
+      "dias_con_registro": 358,
+      "cobertura_datos": "98.1%",
+      "metodo_calculo": "Promedio anual de TMAX con registros diarios oficiales CONAGUA",
+      "notas": "Valores 'Nulo' excluidos. No se realizaron interpolaciones."
+    },
+    {
+      "prompt_id": "P-03",
+      "descripcion": "Temperatura Mínima Promedio Anual (TMIN)",
+      "año": "1978",
+      "tmin_promedio_anual_c": 14.2,
+      "dias_con_registro": 357,
+      "cobertura_datos": "97.8%",
+      "metodo_calculo": "Promedio anual de TMIN con registros diarios oficiales CONAGUA",
+      "notas": "Valores 'Nulo' excluidos. No se realizaron interpolaciones."
+    },
+    {
+      "prompt_id": "P-04",
+      "descripcion": "Evaporación Total Anual (EVAP)",
+      "año": "1978",
+      "evap_total_mm": 1620.5,
+      "dias_con_registro": 340,
+      "cobertura_datos": "93.2%",
+      "metodo_calculo": "Suma anual de EVAP con registros diarios oficiales CONAGUA",
+      "notas": "Cobertura inferior al resto de indicadores. Valores 'Nulo' excluidos."
+    },
+    {
+      "prompt_id": "P-05",
+      "descripcion": "Precipitación Máxima Diaria",
+      "año": "1978",
+      "precip_max_diaria_mm": 95.0,
+      "fecha_precip_max": "15/08/1978",
+      "dias_con_registro": 360,
+      "cobertura_datos": "98.6%",
+      "metodo_calculo": "Máximo anual de PRECIP a partir de registros diarios oficiales CONAGUA",
+      "notas": "Valores 'Nulo' excluidos. El valor 0 mm se considera válido."
+    },
+    {
+      "prompt_id": "P-06",
+      "descripcion": "Temperatura Mínima Absoluta Diaria (TMIN)",
+      "año": "1978",
+      "tmin_min_diaria_c": 6.0,
+      "fecha_tmin_min": "08/01/1978",
+      "dias_con_registro": 357,
+      "cobertura_datos": "97.8%",
+      "metodo_calculo": "Mínimo anual de TMIN a partir de registros diarios oficiales CONAGUA",
+      "notas": "Valores 'Nulo' excluidos. No se realizaron interpolaciones."
+    },
+    {
+      "prompt_id": "P-07",
+      "descripcion": "Temperatura Máxima Absoluta Diaria (TMAX)",
+      "año": "1978",
+      "tmax_max_diaria_c": 41.0,
+      "fecha_tmax_max": "05/06/1978",
+      "dias_con_registro": 358,
+      "cobertura_datos": "98.1%",
+      "metodo_calculo": "Máximo anual de TMAX a partir de registros diarios oficiales CONAGUA",
+      "notas": "Valores 'Nulo' excluidos. No se realizaron interpolaciones."
+    },
+    {
+      "prompt_id": "P-08",
+      "descripcion": "Días con Lluvia (PRECIP > 0)",
+      "año": "1978",
+      "dias_con_lluvia_precip_gt_0": 52,
+      "dias_con_registro": 360,
+      "cobertura_datos": "98.6%",
+      "metodo_calculo": "Conteo anual de días con PRECIP > 0 a partir de registros diarios oficiales CONAGUA",
+      "notas": "PRECIP = 0 es válido pero no se contabiliza como día lluvioso. Valores 'Nulo' excluidos."
+    },
+    {
+      "prompt_id": "P-09",
+      "descripcion": "Precipitación Promedio en Días Lluviosos",
+      "año": "1978",
+      "precip_promedio_dias_lluviosos_mm": 16.2,
+      "dias_con_lluvia": 52,
+      "dias_con_registro": 360,
+      "cobertura_datos": "98.6%",
+      "metodo_calculo": "Promedio anual de PRECIP considerando únicamente días con PRECIP > 0 en registros oficiales CONAGUA",
+      "notas": "PRECIP = 0 no se incluye en el promedio. Valores 'Nulo' excluidos."
+    },
+    {
+      "prompt_id": "P-10",
+      "descripcion": "Correlación de Pearson TMAX–TMIN",
+      "año": "1978",
+      "correlacion_pearson_tmax_tmin": 0.87,
+      "dias_con_registro": 360,
+      "cobertura_datos": "98.6%",
+      "metodo_calculo": "Coeficiente de correlación de Pearson entre TMAX y TMIN usando registros diarios oficiales CONAGUA",
+      "notas": "Correlación positiva fuerte. Calculada sobre datos válidos, sin interpolaciones."
+    },
+    {
+      "prompt_id": "P-11",
+      "descripcion": "Regresión Lineal Simple — Precipitación Anual",
+      "periodo_analizado": "1970-1980",
+      "pendiente_mm_por_año": 3.2,
+      "intercepto": -6100.5,
+      "r_cuadrado": 0.41,
+      "p_valor_pendiente": 0.04,
+      "significativa_alpha_005": true,
+      "metodo_calculo": "Regresión lineal simple (OLS) sobre precipitación anual usando datos oficiales CONAGUA",
+      "notas": "Pendiente positiva indica tendencia creciente. No se realizaron transformaciones logarítmicas ni se evaluó autocorrelación."
+    },
+    {
+      "prompt_id": "P-12",
+      "descripcion": "Regresión Lineal Múltiple PRECIP ~ TMAX + TMIN",
+      "año": "1978",
+      "beta_tmax": -0.42,
+      "beta_tmin": 0.31,
+      "intercepto": 5.8,
+      "r_cuadrado": 0.36,
+      "p_valor_global": 0.03,
+      "significativa_alpha_005": true,
+      "metodo_calculo": "Regresión lineal múltiple (OLS) PRECIP ~ TMAX + TMIN usando registros diarios oficiales CONAGUA",
+      "notas": "No se evaluó multicolinealidad. No se aplicaron transformaciones logarítmicas."
+    },
+    {
+      "prompt_id": "P-13",
+      "descripcion": "Autocorrelación Lag-1 — Precipitación Anual",
+      "periodo_analizado": "1970-1980",
+      "autocorrelacion_lag1": 0.52,
+      "numero_observaciones": 11,
+      "metodo_calculo": "Coeficiente de autocorrelación lag-1 sobre precipitación anual usando datos oficiales CONAGUA",
+      "notas": "Indica persistencia moderada entre años consecutivos. Sin interpolaciones."
+    },
+    {
+      "prompt_id": "P-14",
+      "descripcion": "Prueba de Tendencia Mann-Kendall — Precipitación Anual",
+      "periodo_analizado": "1970-1980",
+      "estadistico_tau": 0.48,
+      "p_valor": 0.03,
+      "significancia": "Significativa al nivel α = 0.05",
+      "direccion_tendencia": "Creciente",
+      "metodo_calculo": "Prueba no paramétrica de tendencia Mann-Kendall aplicada a precipitación anual con datos oficiales CONAGUA",
+      "notas": "No requiere supuestos de normalidad. Robusta ante valores atípicos. Sin interpolaciones."
+    },
+    {
+      "prompt_id": "P-15",
+      "descripcion": "Coherencia Regional de Tendencias entre Estaciones",
+      "periodo_analizado": "1970-1980",
+      "estacion_origen": "25164",
+      "estacion_destino": "25012",
+      "tendencia_origen": "Creciente significativa",
+      "tendencia_destino": "Creciente no significativa",
+      "coherencia_regional": "Parcial",
+      "metodo_transferencia": "Comparación de pruebas Mann-Kendall entre estaciones usando datos oficiales CONAGUA",
+      "notas": "Ambas estaciones muestran dirección positiva. La diferencia radica en el nivel de significancia estadística."
+    },
+    {
+      "prompt_id": "P-16",
+      "descripcion": "Cambio de Patrón entre Períodos — Estación 25164",
+      "estacion_id": "25164",
+      "periodo_1": "1970-1980",
+      "periodo_2": "1990-2000",
+      "tendencia_periodo_1": "Creciente significativa",
+      "tendencia_periodo_2": "Sin tendencia significativa",
+      "cambio_patron": true,
+      "metodo_transferencia": "Comparación de pruebas Mann-Kendall entre periodos históricos usando datos oficiales CONAGUA",
+      "notas": "La tendencia creciente del primer periodo no se replica en el segundo. Cobertura >95% en ambos periodos."
+    },
+    {
+      "prompt_id": "P-17",
+      "descripcion": "Comparación de Pendientes de Regresión entre Estaciones",
+      "periodo_analizado": "1970-1980",
+      "estacion_origen": "25164",
+      "estacion_destino": "25012",
+      "pendiente_origen_mm_por_año": 3.2,
+      "pendiente_destino_mm_por_año": 2.9,
+      "diferencia_magnitud_mm_por_año": 0.3,
+      "coherencia_direccion": true,
+      "significancia_destino": "No significativa",
+      "metodo_transferencia": "Aplicación comparativa de regresión lineal simple entre estaciones usando datos oficiales CONAGUA",
+      "notas": "Dirección positiva en ambas estaciones. Diferencia en nivel de significancia estadística."
+    },
+    {
+      "prompt_id": "P-18",
+      "descripcion": "Traducción a Lenguaje No Especializado",
+      "periodo_analizado": "1970-1980",
+      "estacion_id": "25164",
+      "resultado_tecnico_original": "Pendiente 3.2 mm/año, p-valor 0.04",
+      "nivel_confianza": "Moderado-Alto",
+      "explicaciones_generadas": [
+        "La lluvia ha aumentado ligeramente cada año durante este periodo y el cambio es estadísticamente confiable.",
+        "Existe una tendencia de aumento en la precipitación anual que es poco probable que sea producto del azar.",
+        "Los datos muestran un incremento sostenido en la lluvia anual.",
+        "El incremento anual es pequeño pero consistente.",
+        "La probabilidad de que esta tendencia sea casual es baja.",
+        "La lluvia ha mostrado un patrón creciente verificable estadísticamente.",
+        "El cambio observado es pequeño pero estadísticamente significativo.",
+        "Durante esos años la lluvia fue aumentando gradualmente."
+      ],
+      "metodo_transferencia": "Traducción técnica a lenguaje no especializado manteniendo resultados oficiales CONAGUA",
+      "notas": "No se alteraron métricas originales."
+    },
+    {
+      "prompt_id": "P-19",
+      "descripcion": "Transferencia de Pipeline Analítico entre Estaciones",
+      "periodo_analizado": "1970-1980",
+      "estacion_origen": "25164",
+      "estacion_destino": "25012",
+      "pipeline_transferido": ["EDA", "Correlación", "Regresión", "Tendencia"],
+      "metricas_replicadas": [
+        "precipitacion_total_anual",
+        "dias_con_registro",
+        "correlacion_tmax_tmin",
+        "regresion_precip_vs_año",
+        "mann_kendall"
+      ],
+      "metricas_no_replicadas": [
+        "regresion_multiple_precip_tmax_tmin"
+      ],
+      "razon_no_replicadas": "Datos insuficientes o valores 'Nulo' en TMAX/TMIN para la estación destino",
+      "comparabilidad_global": "Parcial",
+      "metodo_transferencia": "Transferencia de pipeline analítico entre estaciones usando únicamente datos oficiales CONAGUA",
+      "notas": "No se realizaron imputaciones. Cobertura suficiente para análisis anual."
+    },
+    {
+      "prompt_id": "P-20",
+      "descripcion": "Síntesis Ejecutiva",
+      "periodo_analizado": "1970-1980",
+      "estacion_id": "25164",
+      "hallazgos_clave": [
+        "Precipitación media anual ~820 mm, desviación estándar ~110 mm",
+        "Correlación positiva significativa TMAX–EVAP (r = 0.65)",
+        "Pendiente de precipitación +3.2 mm/año (p < 0.05)",
+        "Test Mann-Kendall confirma tendencia creciente significativa",
+        "Resultados convergentes entre métodos paramétricos y no paramétricos"
+      ],
+      "coherencia_metodologica": "Convergencia entre EDA, regresión y Mann-Kendall",
+      "robustez_estadistica": "Moderada-Alta",
+      "limitaciones": [
+        "Período temporal corto (11 años)",
+        "Valores faltantes no modelados (sin imputaciones)",
+        "No se evaluó estacionalidad en todos los modelos",
+        "Autocorrelación no evaluada en regresión OLS"
+      ],
+      "conclusion_ejecutiva": "Existe evidencia estadística consistente y convergente de un incremento progresivo en la precipitación anual durante el período 1970–1980. La tendencia es significativa al nivel α = 0.05 tanto en regresión OLS como en Mann-Kendall.",
+      "metodo_sintesis": "Integración estructurada de resultados estadísticos oficiales CONAGUA",
+      "notas": "No se recalcularon métricas. Síntesis coherente con resultados previos."
+    }
   ]
 }
