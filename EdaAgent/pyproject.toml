@@ -1,0 +1,30 @@
+[project]
+name = "conaigua"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "langchain",
+    "langchain-core",
+    "langchain-groq",        
+    "langchain-openai",
+    "langchain-google-genai",
+    "langchain-anthropic",
+    "langgraph",
+    "python-dotenv",
+    "rich",
+    "pandas",
+    "pyarrow",
+    "numpy",
+    "scipy",
+    "scikit-learn",
+    "ydata-profiling",
+    "setuptools",
+]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::UserWarning",
+]
