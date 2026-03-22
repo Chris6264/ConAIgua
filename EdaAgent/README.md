@@ -3,6 +3,11 @@
 Agente conversacional especializado en análisis de datos hidrometeorológicos de estaciones CONAGUA en Sinaloa, México. Permite consultar estadísticas, correlaciones, regresiones y generar reportes mediante lenguaje natural desde la terminal.
 
 ---
+<div align="center">
+
+[English Version](README.en.md)
+
+</div>
 
 ## Requisitos previos
 
