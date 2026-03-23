@@ -32,7 +32,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 pip install uv
 ```
 
-> Si prefieres no usar `uv`, puedes usar `pip` directamente. Donde el README diga `uv pip install`, sustituye por `pip install`.
+> Si prefieres no usar `uv`, puedes usar `pip` directamente.
 
 ---
 
@@ -42,7 +42,7 @@ pip install uv
 
 ```bash
 git clone https://github.com/Chris6264/ConAIgua.git
-cd ConAIgua
+cd EdaAgent
 ```
 
 ### 2. Crear el entorno virtual con Python 3.12
