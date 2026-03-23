@@ -32,7 +32,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 pip install uv
 ```
 
-> If you prefer not to use `uv`, you can use `pip` directly. Wherever the README says `uv pip install`, replace it with `pip install`.
+> If you prefer not to use `uv`, you can use `pip` directly. 
 
 ---
 
@@ -42,7 +42,7 @@ pip install uv
 
 ```bash
 git clone https://github.com/Chris6264/ConAIgua.git
-cd ConAIgua
+cd EdaAgent
 ```
 
 ### 2. Create the virtual environment with Python 3.12
@@ -76,13 +76,6 @@ Without `uv`:
 ```bash
 pip install -e .
 ```
-
-> If you plan to use an LLM provider other than Groq, install its additional package:
-> ```bash
-> uv pip install -e ".[openai]"      # OpenAI
-> uv pip install -e ".[anthropic]"   # Anthropic (Claude)
-> uv pip install -e ".[google]"      # Google Gemini
-> ```
 
 ### 5. Configure environment variables
 
