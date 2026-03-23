@@ -182,8 +182,12 @@ Generame un reporte de la estación 25001 en html
 ## Estructura del proyecto
 
 ```
-ConAIgua/
-├── main.py                              # Punto de entrada
+EdaAgent/
+├── src/
+│ └── conaigua/
+│ ├── init.py
+│ └── main.py # Punto de entrada CLI
+├
 ├── .env.example                         # Plantilla de variables de entorno
 ├── pyproject.toml                       # Dependencias del proyecto
 │

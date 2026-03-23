@@ -182,8 +182,12 @@ Generate a report for station 25001 in html
 ## Project Structure
 
 ```
-ConAIgua/
-├── main.py                              # Entry point
+EdaAgent/
+├── src/
+│ └── conaigua/
+│ ├── init.py
+│ └── main.py # Entry Point CLI
+│
 ├── .env.example                         # Environment variables template
 ├── pyproject.toml                       # Project dependencies
 │
