@@ -119,7 +119,7 @@ Esto creará `data/processed/conAIgua_dataframe.parquet`.
 ## Ejecución
 
 ```bash
-cd ..
+cd src/conaigua
 python main.py
 ```
 
