@@ -119,8 +119,7 @@ This will create `data/processed/conAIgua_dataframe.parquet`.
 ## Running
 
 ```bash
-cd src/conaigua
-python main.py
+python -m src.conaigua.main
 ```
 
 Type `salir`, `exit` or `quit` to end the session.
