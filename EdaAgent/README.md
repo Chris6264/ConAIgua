@@ -107,7 +107,7 @@ GOOGLE_API_KEY=tu_api_key_aqui
 Los archivos `.txt` de las estaciones deben estar en `data/raw/`. Una vez ahí, genera el dataset procesado:
 
 ```bash
-python -m scripts.dataframe_generator.dataset_generator
+python -m scripts.dataset_generator.dataset_generator
 ```
 
 Esto creará `data/processed/conAIgua_dataframe.parquet`.
