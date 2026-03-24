@@ -93,13 +93,13 @@ Open `.env` and configure your provider and API key:
 
 ```dotenv
 # LLM Provider — options: groq, openai, anthropic, google
-LLM_PROVIDER=groq
+LLM_PROVIDER="groq"
 
 # Add ONLY the key for the provider you are going to use
-GROQ_API_KEY=your_api_key_here
-OPENAI_API_KEY=your_api_key_here
-ANTHROPIC_API_KEY=your_api_key_here
-GOOGLE_API_KEY=your_api_key_here
+GROQ_API_KEY="your_api_key_here"
+OPENAI_API_KEY="your_api_key_here"
+ANTHROPIC_API_KEY="your_api_key_here"
+GOOGLE_API_KEY="your_api_key_here"
 ```
 
 ### 6. Prepare the dataset
@@ -107,7 +107,7 @@ GOOGLE_API_KEY=your_api_key_here
 The station `.txt` files must be placed in `data/raw/`. Once there, generate the processed dataset:
 
 ```bash
-python -m scripts.dataframe_generator.dataset_generator
+python -m scripts.dataset_generator.dataset_generator
 ```
 
 This will create `data/processed/conAIgua_dataframe.parquet`.
