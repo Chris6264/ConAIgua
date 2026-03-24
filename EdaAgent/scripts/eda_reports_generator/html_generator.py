@@ -1,5 +1,6 @@
 from pathlib import Path
-import pandas as pd
+import os
+os.environ["YDATA_SILENT_MODE"] = "1"
 from ydata_profiling import ProfileReport
 
 from scripts.eda_engine.data_loader import load_dataset

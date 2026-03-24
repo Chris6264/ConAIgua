@@ -20,7 +20,7 @@ dependencies = [
     "scipy",
     "scikit-learn",
     "ydata-profiling",
-    "setuptools",
+    "setuptools<70",
 ]
 
 [tool.setuptools]

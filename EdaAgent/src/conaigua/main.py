@@ -1,12 +1,17 @@
 import re
+import sys
 import time
 import webbrowser
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
 from dotenv import load_dotenv
 from rich.console import Console
 from rich.markdown import Markdown
 
 load_dotenv()
+
 from scripts.eda_agent.config.agent_setup import build_agent
 from scripts.eda_agent.config.logger import log_interaction, log_error
 
@@ -35,7 +40,7 @@ def main():
                     buffer += token.content
         except Exception as e:
             log_error(str(e), user_input)
-            console.print("\nConAIgua: Solo puedo ayudarte con temas relacionados al análisis hidrometeorológico del proyecto ConAIgua.\n")
+            console.print(f"\n[red]ERROR: {e}[/red]\n")  
             continue
 
         if "__HTML__:" in buffer:
