@@ -93,13 +93,13 @@ Abre `.env` y configura tu proveedor y API key:
 
 ```dotenv
 # Proveedor LLM — opciones: groq, openai, anthropic, google
-LLM_PROVIDER=groq
+LLM_PROVIDER="groq"
 
 # Agrega SOLO la key del proveedor que vayas a usar
-GROQ_API_KEY=tu_api_key_aqui
-OPENAI_API_KEY=tu_api_key_aqui
-ANTHROPIC_API_KEY=tu_api_key_aqui
-GOOGLE_API_KEY=tu_api_key_aqui
+GROQ_API_KEY="tu_api_key_aqui"
+OPENAI_API_KEY="tu_api_key_aqui"
+ANTHROPIC_API_KEY="tu_api_key_aqui"
+GOOGLE_API_KEY="tu_api_key_aqui"
 ```
 
 ### 6. Preparar el dataset
