@@ -1,6 +1,7 @@
 import pandas as pd
+from pathlib import Path
 
-DATA_PATH = r'data\processed\conAIgua_dataframe.parquet'
+DATA_PATH = Path(__file__).resolve().parent.parent.parent.parent / "data" / "processed" / "conAIgua_dataframe.parquet"
 
 def load_dataset():
     return pd.read_parquet(DATA_PATH)
