@@ -16,6 +16,7 @@ dependencies = [
     "rich",
     "pandas",
     "pyarrow",
+    "pytest",
     "numpy",
     "scipy",
     "scikit-learn",
