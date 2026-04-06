@@ -8,7 +8,7 @@ from conaigua.data_pipeline.quality_report import QualityReport
 
 class PipelineRunner:
 
-    BASE_DIR = Path(__file__).resolve().parent.parent.parent
+    BASE_DIR = Path(__file__).resolve().parents[3]
     RAW_DIR = BASE_DIR / "data" / "raw"
     PROCESSED_DIR = BASE_DIR / "data" / "processed"
 
