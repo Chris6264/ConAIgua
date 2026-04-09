@@ -1,0 +1,6 @@
+llm:
+  provider: groq
+  model: qwen/qwen3-32b
+  api_key: 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
+  temperature: 0
+  max_tokens: 1024
