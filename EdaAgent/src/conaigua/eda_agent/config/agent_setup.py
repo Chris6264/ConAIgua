@@ -2,7 +2,7 @@ from langchain.agents import create_agent
 from langgraph.checkpoint.memory import InMemorySaver
 
 from .llm_wrapper import build_llm
-from .logger import log_agent_start
+from ...utils.logger import log_agent_start
 
 from conaigua.eda_agent.tools.eda_tool import eda_tool
 from conaigua.eda_agent.tools.trend_tool import trend_tool
