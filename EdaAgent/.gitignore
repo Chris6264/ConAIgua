@@ -15,6 +15,8 @@ wheels/
 # Logs
 logs/
 
+target/
+
 # Reportes generados — son pesados y se regeneran
 reports/eda/html/
 reports/eda/markdown/
