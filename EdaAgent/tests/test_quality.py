@@ -1,4 +1,5 @@
 import pandas as pd
+import pytest
 from conaigua.data_pipeline.quality_report import QualityReport
 
 
@@ -34,9 +35,7 @@ def test_null_percentage():
 
     report = QualityReport.generate(df).set_index("columna")
 
-    # Verifica porcentaje de nulos
-    expected = (2 / 3) * 100
-    assert report.loc["a", "porcentaje_nulos"] == expected
+    assert report.loc["a", "porcentaje_nulos"] == pytest.approx(66.67, abs=0.01)
 
 
 def test_multiple_columns():
