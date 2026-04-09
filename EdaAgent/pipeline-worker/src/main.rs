@@ -23,7 +23,6 @@ async fn run_pipeline() -> Json<serde_json::Value> {
     let project_root = std::env::current_dir()
         .unwrap()
         .parent().unwrap()
-        .parent().unwrap()
         .to_path_buf();
 
     let python = get_python(&project_root);
