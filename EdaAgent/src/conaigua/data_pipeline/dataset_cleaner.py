@@ -7,7 +7,8 @@ class DataFrameCleaner:
 
         df = df.copy()
 
-        df.replace("Nulo", pd.NA, inplace=True)
+        cols_to_clean = [col for col in df.columns if col != "cve_omm"]
+        df[cols_to_clean] = df[cols_to_clean].replace("Nulo", pd.NA)
 
         if "fecha" in df.columns:
             df['fecha'] = pd.to_datetime(df['fecha'], format="%d/%m/%Y", errors="coerce")
@@ -32,7 +33,6 @@ class DataFrameCleaner:
             if col in df.columns:
                 df[col] = pd.to_numeric(df[col], errors='coerce')
 
-        # 🔹 Validaciones
         if "precip" in df.columns:
             df = df[(df["precip"].isna()) | (df["precip"] >= 0)]
 
