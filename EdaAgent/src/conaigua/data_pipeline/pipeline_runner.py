@@ -20,6 +20,7 @@ class PipelineRunner:
 
     OUTPUT_FILE = PROCESSED_DIR / "conAIgua_dataframe.parquet"
     QUALITY_FILE = PROCESSED_DIR / "quality_report.csv"
+    QUALITY_HTML = PROCESSED_DIR / "quality_report.html"
 
     @classmethod
     def run(cls) -> pd.DataFrame:
@@ -61,7 +62,10 @@ class PipelineRunner:
 
         report = QualityReport.generate(df)
         QualityReport.save(report, cls.QUALITY_FILE)
-        logger.info(f"Reporte de calidad guardado en: {cls.QUALITY_FILE}")
+        logger.info(f"Reporte CSV guardado en: {cls.QUALITY_FILE}")
+
+        QualityReport.generate_html(report, df, cls.QUALITY_HTML)
+        logger.info(f"Reporte HTML guardado en: {cls.QUALITY_HTML}")
 
         duration = round(time.time() - start_time, 3)
         logger.info(f"Pipeline finalizado en {duration}s")
