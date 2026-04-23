@@ -1,9 +1,6 @@
 from langchain.agents import create_agent
 from langgraph.checkpoint.memory import InMemorySaver
-
 from .llm_wrapper import build_llm
-from ...utils.logger import log_agent_start
-
 from conaigua.eda_agent.tools.eda_tool import eda_tool
 from conaigua.eda_agent.tools.trend_tool import trend_tool
 from conaigua.eda_agent.tools.report_tool import report_tool
@@ -53,6 +50,13 @@ Tienes acceso a datos de estaciones meteorológicas de Sinaloa, México.
 - Si faltan datos o una variable no existe, indícalo explícitamente.
 - El valor 0 es válido. Excluye solo registros con valor 'Nulo'.
 - Cuando report_tool retorne __MD__ o __HTML__, responde ÚNICAMENTE con ese token sin texto adicional.
+- Si el usuario solicita las estaciones disponibles:
+  - Muestra SOLO una lista de máximo 10 estaciones.
+  - Presenta únicamente los nombres (sin IDs ni metadatos).
+  - Usa formato enumerado:
+    1.- Nombre estación
+    2.- Nombre estación
+  - Indicar que son algunas estaciones y decir el total.
 
 ## Límites estrictos
 - Solo responde preguntas sobre: climatología, hidrología, CONAGUA, el proyecto ConAIgua,
@@ -68,11 +72,6 @@ def build_agent():
 
     llm = build_llm()
     checkpointer = InMemorySaver()
-
-    try:
-        log_agent_start(modelo="config", n_tools=len(TOOLS))
-    except Exception:
-        pass
 
     agent = create_agent(
         llm,
