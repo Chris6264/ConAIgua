@@ -1,6 +1,7 @@
 from conaigua.orchestration.e2e_runner import E2EPipelineRunner
+from langchain_core.tools import tool
 
-
+@tool
 def e2e_pipeline_tool(
     station_id: str | None = None,
     fecha_inicio: str | None = None,
