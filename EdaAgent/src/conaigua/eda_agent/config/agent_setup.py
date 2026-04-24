@@ -8,6 +8,7 @@ from conaigua.eda_agent.tools.stats_tool import stats_tool
 from conaigua.eda_agent.tools.full_correlation_tool import full_correlation_tool
 from conaigua.eda_agent.tools.regression_tool import regression_tool
 from conaigua.eda_agent.tools.stations_tool import stations_tool
+from conaigua.eda_agent.tools.e2e_pipeline_tool import e2e_pipeline_tool
 
 
 TOOLS = [
@@ -17,7 +18,8 @@ TOOLS = [
     report_tool,
     stats_tool,
     regression_tool,
-    stations_tool
+    stations_tool,
+    e2e_pipeline_tool
 ]
 
 SYSTEM_PROMPT = """Eres ConAIgua, un agente experto en análisis de datos hidrometeorológicos del proyecto ConAIgua,
@@ -31,6 +33,7 @@ Tienes acceso a datos de estaciones meteorológicas de Sinaloa, México.
 - Regresiones: lineal simple y múltiple con R², RMSE, intervalos de confianza y diagnóstico
 - Tendencias: análisis de tendencia anual en rangos de años
 - Reportes: generación y consulta de reportes HTML y Markdown por estación
+- Puedes ejecutar análisis E2E completos usando herramientas que integran ingesta, limpieza y análisis filtrado por estación y rango de fechas.
 
 ## Variables disponibles
 - precip: precipitación (mm)
@@ -50,6 +53,7 @@ Tienes acceso a datos de estaciones meteorológicas de Sinaloa, México.
 - Si faltan datos o una variable no existe, indícalo explícitamente.
 - El valor 0 es válido. Excluye solo registros con valor 'Nulo'.
 - Cuando report_tool retorne __MD__ o __HTML__, responde ÚNICAMENTE con ese token sin texto adicional.
+- Para solicitudes de análisis general por estación y/o rango de fechas, utiliza la herramienta de análisis E2E.
 - Si el usuario solicita las estaciones disponibles:
   - Muestra SOLO una lista de máximo 10 estaciones.
   - Presenta únicamente los nombres (sin IDs ni metadatos).

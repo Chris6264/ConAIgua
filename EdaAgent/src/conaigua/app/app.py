@@ -1,5 +1,6 @@
 import argparse
 from rich.console import Console
+from dotenv import load_dotenv
 
 from conaigua.core.config_service import handle_config
 from conaigua.core.app_factory import build_app
@@ -15,6 +16,7 @@ def parse_args():
 
 
 def run_app():
+    load_dotenv()
     args = parse_args()
 
     config = handle_config(args, console)
