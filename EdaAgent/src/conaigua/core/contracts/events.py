@@ -8,19 +8,18 @@ class EventType(str, Enum):
     VALIDACION_INICIADA = "validacion_iniciada"
     VALIDACION_COMPLETADA = "validacion_completada"
 
-    PREPROCESAMIENTO_INICIADO = "preprocesamiento_iniciado"
     PREPROCESAMIENTO_COMPLETADO = "preprocesamiento_completado"
 
     ANALISIS_INICIADO = "analisis_iniciado"
     ANALISIS_GENERADO = "analisis_generado"
 
-    REPORTE_INICIADO = "reporte_iniciado"
     REPORTE_GENERADO = "reporte_generado"
 
+    PIPELINE_FINALIZADO = "pipeline_finalizado"
     ERROR_DETECTADO = "error_detectado"
 
 
 class EventStatus(str, Enum):
+    IN_PROGRESS = "in_progress"
     SUCCESS = "success"
     FAILED = "failed"
-    IN_PROGRESS = "in_progress"
