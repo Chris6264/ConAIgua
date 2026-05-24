@@ -1,0 +1,95 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  background: #ffffff;
+  z-index: 100;
+
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+}
+
+.header-container {
+  width: 100%;
+  min-height: 88px;
+
+  padding: 0 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo img {
+  width: 300px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.navbar-link {
+  position: relative;
+
+  text-decoration: none;
+  color: #0f172a;
+
+  font-size: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+
+  transition: color 0.3s ease;
+}
+
+.navbar-link:hover {
+  color: #2596be;
+}
+
+.navbar-link::before {
+  content: "";
+
+  position: absolute;
+  top: 130%;
+  left: 0;
+
+  width: 0;
+  height: 3px;
+
+  background: #2596be;
+  border-radius: 999px;
+
+  transition: width 0.3s ease;
+}
+
+.navbar-link:hover::before {
+  width: 100%;
+}
+
+.navbar-link.active {
+  color: #2596be;
+}
+
+.navbar-link.active::before {
+  width: 100%;
+}
