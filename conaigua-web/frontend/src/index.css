@@ -7,6 +7,14 @@
   font-family: "Poppins", sans-serif;
 }
 
+body {
+  min-height: 100vh;
+  background-image: url("./assets/conaigua-background2.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 a {
   text-decoration: none;
 }
