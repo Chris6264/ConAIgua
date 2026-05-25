@@ -11,7 +11,7 @@ export function WelcomeText({ className = "" }) {
 
       <p>
         Analiza, visualiza y toma mejores decisiones con datos de estaciones
-        climatológicas e inteligencia artificial.
+        climatológicas.
       </p>
     </section>
   );
