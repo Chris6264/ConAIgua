@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./Navbar.css";
 import logo from "../../assets/conaigua-logo.png";
-import { LoginButton } from "../buttons/login-button/LoginButton";
+import { ButtonWithIcon } from "../buttons/button-with-icon/ButtonWithIcon";
 
-const Navbar = () => {
+export function Navbar(){
   const [activeLink, setActiveLink] = useState("inicio");
 
   return (
@@ -48,11 +48,9 @@ const Navbar = () => {
             </a>
           </nav>
 
-          <LoginButton href="/login">Iniciar sesión</LoginButton>
+          <ButtonWithIcon href="/login">Iniciar sesión</ButtonWithIcon>
         </div>
       </div>
     </header>
   );
 };
-
-export default Navbar;

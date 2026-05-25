@@ -1,8 +1,8 @@
-import React from 'react'
+import "./ButtonWithImage.css";
 
-export const ButtonWithImage = ({children, image}) => {
+export function ButtonWithImage ({children, image}){
     return (
-        <button>
+        <button className="button-with-image">
         {image && <img src={image} alt='' />}
         <span>{children}</span>
         </button>

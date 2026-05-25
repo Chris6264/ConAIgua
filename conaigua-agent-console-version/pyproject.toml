@@ -1,0 +1,34 @@
+[project]
+name = "conaigua"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "langchain",
+    "langchain-core",
+    "langchain-groq",        
+    "langchain-openai",
+    "langchain-google-genai",
+    "langchain-anthropic",
+    "langgraph",
+    "python-dotenv",
+    "rich",
+    "pandas",
+    "pyarrow",
+    "pytest",
+    "numpy",
+    "scipy",
+    "scikit-learn",
+    "ydata-profiling",
+    "setuptools<70",
+]
+
+[project.scripts]
+conaigua = "conaigua.main:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
