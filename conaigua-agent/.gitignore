@@ -17,9 +17,12 @@ logs/
 
 target/
 
+# Configuración
+config/config.yaml
+.langgraph_api
+
 # Reportes generados — son pesados y se regeneran
-reports/eda/html/
-reports/eda/markdown/
+reports
 
 # Data procesada — es pesada, se regenera con el script
 data/processed/
