@@ -21,11 +21,13 @@ dependencies = [
     "scipy",
     "scikit-learn",
     "ydata-profiling",
-    "setuptools<70",
+    "setuptools==80.9.0",
 ]
 
-[project.scripts]
-conaigua = "conaigua.main:main"
+[dependency-groups]
+dev = [
+    "langgraph-cli[inmem]",
+]
 
 [tool.setuptools]
 package-dir = {"" = "src"}
