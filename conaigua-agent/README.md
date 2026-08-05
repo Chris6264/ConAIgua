@@ -129,7 +129,7 @@ cd reports/eda
 python -m http.server 8080
 ```
 
-Escribe `salir`, `exit` o `quit` para terminar la sesión.
+Presiona `Ctrl + C` para terminar la sesión.
 
 ---
 
