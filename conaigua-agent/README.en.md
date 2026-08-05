@@ -115,15 +115,28 @@ This will create `data/processed/conAIgua_dataframe.parquet`.
 > If you already have the `.parquet` file, you can skip this step.
 
 ---
+## Execution
 
-## Running
+Once the processed file has been generated, the agent can be run with LangGraph using the following command:
 
 ```bash
-python -m src.conaigua.main
+uv run langgraph dev
 ```
 
-Type `salir`, `exit` or `quit` to end the session.
+Additionally, to view the generated EDA reports in HTML format, start a local server from the reports directory:
 
+```bash
+cd reports/eda
+python -m http.server 8080
+```
+
+Then open the following URL in your browser:
+
+```text
+http://localhost:8080
+```
+
+Press `Ctrl + C` to stop the server.
 ---
 
 ## LLM Providers
