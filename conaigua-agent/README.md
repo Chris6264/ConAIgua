@@ -119,7 +119,13 @@ Esto creará `data/processed/conAIgua_dataframe.parquet`.
 ## Ejecución
 
 ```bash
-python -m src.conaigua.main
+uv run langgraph dev
+```
+Adicionalmente, para visualizar los reportes EDA generados en formato HTML, se puede levantar un servidor local desde la carpeta de reportes mediante los siguientes comando:
+
+```bash
+cd reports/eda 
+python -m http.server 8080
 ```
 
 Escribe `salir`, `exit` o `quit` para terminar la sesión.
