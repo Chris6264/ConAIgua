@@ -117,6 +117,7 @@ Esto creará `data/processed/conAIgua_dataframe.parquet`.
 ---
 
 ## Ejecución
+Una vez generado el archivo procesado, el agente puede ejecutarse mediante LangGraph utilizando el siguiente comando:
 
 ```bash
 uv run langgraph dev
