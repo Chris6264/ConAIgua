@@ -126,7 +126,7 @@ llm:
 
 ### 6. Preparar el dataset
 
-Los archivos `.txt` de las estaciones deben estar en `data/raw/`. Una vez ahí, genera el dataset procesado:
+Los archivos `.txt` de las estaciones deben estar en `data/raw/`. Una vez ahí, genera el dataset procesado con el pipeline:
 
 ```bash
 python -m scripts.run_data_pipeline
@@ -285,7 +285,6 @@ EdaAgent/
 ```bash
 pytest tests/test_us_3_3.py scripts\eda_agent\config\logger.py -v           
 ```
-
 ---
 
 ## Generar todos los reportes por adelantado
@@ -293,7 +292,7 @@ pytest tests/test_us_3_3.py scripts\eda_agent\config\logger.py -v
 Si deseas pre-generar los reportes de todas las estaciones antes de usar el agente:
 
 ```bash
-python -m scripts.eda_reports_generator.reports_generator
+python -m scripts.run_reports_generator_pipeline
 ```
 
 Los reportes quedarán en `reports/eda/html/` y `reports/eda/markdown/`. El agente los reutilizará automáticamente sin regenerarlos.
