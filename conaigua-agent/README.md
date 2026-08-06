@@ -142,7 +142,7 @@ Esto creará `data/processed/conAIgua_dataframe.parquet`.
 Una vez generado el archivo procesado, el agente puede ejecutarse mediante LangGraph utilizando el siguiente comando:
 
 ```bash
-uv run langgraph dev
+PYTHONPATH="$PWD/src" uv run langgraph dev
 ```
 Adicionalmente, para visualizar los reportes EDA generados en formato HTML, se puede levantar un servidor local desde la carpeta de reportes mediante los siguientes comando:
 
