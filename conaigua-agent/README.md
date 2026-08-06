@@ -117,7 +117,7 @@ Despues en el directorio config abre el archivo`config.yaml` y configura tu prov
 
 ```dotenv
 llm:
-  provider: groq
+  provider: groq #Coloca tu proveedor
   model: llama-3.3-70b-versatile #Coloca tu modelo
   api_key_env: "" #Coloca tu API key en forma de variable de entorno.
   temperature: 0
