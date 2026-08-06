@@ -88,6 +88,17 @@ copy .env.example .env
 # Linux / Mac
 cp .env.example .env
 ```
+Copia el archivo de configuración:
+
+```bash
+# Windows
+cd config
+copy config.example.yaml config.yaml
+
+# Linux / Mac
+cd config
+cp cp config.example.yaml config.yaml
+```
 
 Abre `.env` y configura tu proveedor y API key:
 
@@ -102,12 +113,23 @@ ANTHROPIC_API_KEY="tu_api_key_aqui"
 GOOGLE_API_KEY="tu_api_key_aqui"
 ```
 
+Despues en el directorio config abre el archivo`config.yaml` y configura tu proveedor y API key:
+
+```dotenv
+llm:
+  provider: groq
+  model: llama-3.3-70b-versatile #Coloca tu modelo
+  api_key_env: "" #Coloca tu API key en forma de variable de entorno.
+  temperature: 0
+  max_tokens: 1024
+```
+
 ### 6. Preparar el dataset
 
 Los archivos `.txt` de las estaciones deben estar en `data/raw/`. Una vez ahí, genera el dataset procesado:
 
 ```bash
-python -m scripts.dataset_generator.dataset_generator
+python -m scripts.run_data_pipeline
 ```
 
 Esto creará `data/processed/conAIgua_dataframe.parquet`.
