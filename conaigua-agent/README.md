@@ -211,73 +211,92 @@ Generame un reporte de la estación 25001 en html
 ## Estructura del proyecto
 
 ```
-EdaAgent/
-├── src/
-│ └── conaigua/
-│ ├── init.py
-│ └── main.py # Punto de entrada CLI
-├
-├── .env.example                         # Plantilla de variables de entorno
-├── pyproject.toml                       # Dependencias del proyecto
-│
-├── data/
-│   ├── raw/                             # Archivos .txt de estaciones CONAGUA
-│   │   ├── 25001.txt
-│   │   └── ...
-│   └── processed/
-│       └── conAIgua_dataframe.parquet   # Dataset procesado
-│
-├── logs/
-│   └── agent.log                        # Trazabilidad de interacciones
-│
-├── notebooks/
-│   ├── US_3_2_modelado.ipynb            # Ejemplos de regresiones y correlaciones
-│   └── ...
-│
-├── reports/
-│   └── eda/
-│       ├── html/                        # Reportes HTML por estación
-│       └── markdown/                    # Reportes Markdown por estación
-│
-├── scripts/
-│   ├── dataframe_generator/
-│   │   ├── dataset_generator.py         # Genera el parquet desde los .txt
-│   │   ├── dataframe_cleaner.py         # Limpieza del dataframe
-│   │   └── parser.py                    # Parser de archivos CONAGUA
-│   │
-│   ├── eda_agent/
-│   │   ├── config/
-│   │   │   ├── agent_setup.py           # Configuración del agente y tools
-│   │   │   ├── llm_wrapper.py           # Wrapper multi-proveedor LLM
-│   │   │   └── logger.py                # Sistema de logs de trazabilidad
-│   │   └── tools/
-│   │       ├── eda_tool.py              # Análisis EDA completo
-│   │       ├── stats_tool.py            # Estadísticas básicas
-│   │       ├── full_correlation_tool.py # Correlación Pearson/Spearman
-│   │       ├── regression_tool.py       # Regresión lineal simple y múltiple
-│   │       ├── trend_tool.py            # Tendencia anual
-│   │       ├── report_tool.py           # Generación de reportes
-│   │       ├── stations_tool.py         # Listado de estaciones
-│   │       └── filter_tool.py           # Filtrado de datos
-│   │
-│   ├── eda_engine/
-│   │   ├── data_loader.py               # Carga del dataset
-│   │   ├── eda_pipeline.py              # Pipeline EDA
-│   │   ├── correlation.py               # Correlaciones Pearson/Spearman
-│   │   ├── regression.py                # Regresiones lineales
-│   │   ├── stats.py                     # Estadísticas descriptivas
-│   │   ├── outliers.py                  # Detección de outliers IQR
-│   │   └── seasonality.py               # Patrones de estacionalidad
-│   │
-│   └── eda_reports_generator/
-│       ├── html_generator.py            # Generador de reportes HTML
-│       ├── markdown_generator.py        # Generador de reportes Markdown
-│       └── reports_generator.py         # Genera reportes de todas las estaciones
-│
-└── tests/
-    └── test_us_3_3.py                   # Tests del wrapper LLM y agente
+ conaigua-agent/
+    ├── config/
+    │   ├── config.example.yaml
+    │   └── config.yaml
+    ├── data/
+    │   ├── processed/
+    │   └── raw/
+    ├── logs/
+    │   ├── errors.log
+    │   ├── metrics.json
+    │   ├── pipeline_events.jsonl
+    │   └── pipeline.log
+    ├── notebooks/
+    │   ├── check_quality_report.ipynb
+    │   ├── correlation_check.ipynb
+    │   ├── dataframe_check.ipynb
+    │   ├── regression_check.ipynb
+    │   └── US_3_2_Modelado.ipynb
+    ├── reports/
+    │   └── eda/
+    │       ├── html/
+    │       │   ├── eda_station_25078.html
+    │       │   ├── eda_station_25161.html
+    │       │   └── eda_station_25164.html
+    │       └── markdown/
+    │           ├── eda_station_25078.md
+    │           ├── eda_station_25161.md
+    │           └── eda_station_25164.md
+    ├── scripts/
+    │   ├── run_data_pipeline.py
+    │   ├── run_e2e_pipeline.py
+    │   └── run_reports_generator_pipeline.py
+    ├── src/
+    │   └── conaigua/
+    │       ├── core/
+    │       │   └── contracts/
+    │       │       ├── __init__.py
+    │       │       ├── errors.py
+    │       │       ├── events.py
+    │       │       ├── messages.py
+    │       │       └── schemas.py
+    │       ├── data_pipeline/
+    │       │   ├── dataset_cleaner.py
+    │       │   ├── parser.py
+    │       │   ├── pipeline_runner.py
+    │       │   └── quality_report.py
+    │       ├── eda_agent/
+    │       │   ├── config/
+    │       │   └── tools/
+    │       ├── eda_engine/
+    │       │   ├── correlation.py
+    │       │   ├── data_loader.py
+    │       │   ├── outliers.py
+    │       │   ├── regression.py
+    │       │   ├── run_eda_pipeline.py
+    │       │   ├── seasonality.py
+    │       │   └── stats.py
+    │       ├── eda_reports_generator/
+    │       │   ├── html_generator.py
+    │       │   └── markdown_generator.py
+    │       ├── orchestration/
+    │       │   └── e2e_runner.py
+    │       └── utils/
+    │           ├── graph.py
+    │           └── logger.py
+    ├── tests/
+    │   ├── integration/
+    │   ├── conftest.py
+    │   ├── test_agent_setup.py
+    │   ├── test_cleaner.py
+    │   ├── test_contract_integration.py
+    │   ├── test_contracts.py
+    │   ├── test_e2e_pipeline.py
+    │   ├── test_llm_wrapper.py
+    │   ├── test_parser.py
+    │   ├── test_pipeline_integration.py
+    │   ├── test_prompt.py
+    │   ├── test_quality.py
+    │   └── test_tools.py
+    ├── .env.example
+    ├── langgraph.json
+    ├── pyproject.toml
+    ├── README.md
+    ├── README.en.md
+    └── uv.lock
 ```
-
 ---
 
 ## Test
