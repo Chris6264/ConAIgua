@@ -1,12 +1,5 @@
 ## Ejecución de la interfaz web
 
-Para ejecutar la interfaz web del proyecto, primero se debe clonar el repositorio correspondiente:
-
-```bash
-git clone https://github.com/Chris6264/conaigua-chat-ui.git
-cd conaigua-chat-ui
-```
-
 La interfaz web utiliza **Docker** para levantar el entorno de desarrollo de manera controlada y reproducible. La aplicación está construida con **React** y **Next.js**, y utiliza **pnpm** para la instalación de dependencias.
 
 ### 1. Instalar dependencias
