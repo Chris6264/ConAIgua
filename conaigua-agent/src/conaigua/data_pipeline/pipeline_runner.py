@@ -38,6 +38,7 @@ class PipelineRunner:
         timestamp = datetime.now().isoformat()
         process_id = str(uuid.uuid4())
 
+        print("Iniciando pipeline de datos...")
         logger.info("Iniciando pipeline de datos...")
 
         cls._ensure_dirs()
@@ -173,6 +174,7 @@ class PipelineRunner:
             )
 
             duration = round(time.time() - start_time, 3)
+            print(f"Pipeline finalizado en {duration}s")
             logger.info(f"Pipeline finalizado en {duration}s")
 
             metrics = {
