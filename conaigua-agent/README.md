@@ -97,7 +97,7 @@ copy config.example.yaml config.yaml
 
 # Linux / Mac
 cd config
-cp cp config.example.yaml config.yaml
+cp config.example.yaml config.yaml
 ```
 
 Abre `.env` y configura tu proveedor y API key:
