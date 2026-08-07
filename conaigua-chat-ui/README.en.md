@@ -2,6 +2,13 @@
 
 The web interface uses Docker to spin up the development environment in a controlled and reproducible way. The application is built with React and Next.js, and uses pnpm to install dependencies.
 
+---
+<div align="center">
+
+[Versión en Español](README.md)
+
+</div>
+
 ### 1. Install dependencies
 
 First, install the frontend dependencies with the following command:
