@@ -6,7 +6,7 @@
 ![Next.js](https://img.shields.io/badge/Next.js-14+-black.svg)
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg)
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)
-![Status](https://img.shields.io/badge/status-en%20desarrollo-yellow.svg)
+![Status](https://img.shields.io/badge/status-in%20development-yellow.svg)
 
 [Versión en Español](README.md)
 
