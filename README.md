@@ -119,8 +119,8 @@ EMISION   : 06/04/2020
 
 ```text
 ┌────────────┐   ┌──────────────┐   ┌──────────────────┐
-│ TXT plano  │ → │  Pandas      │ → │  Parquet Store    │
-│ CONAGUA    │   │  Transform   │   │  (dataset final)  │
+│ TXT plano  │ → │  Pandas      │ → │  Parquet Store   │
+│ CONAGUA    │   │  Transform   │   │  (dataset final) │
 └────────────┘   └──────────────┘   └──────────────────┘
 ```
 
@@ -164,12 +164,23 @@ El sistema se levanta en dos partes:
 ---
 
 ## Capturas de pantalla
+ 
+**Vista general de la interfaz**
+ 
+<img width="1850" height="657" alt="Vista general de la interfaz" src="https://github.com/user-attachments/assets/53e75300-5335-4ef6-b0b6-09c0947aaa9c" />
 
-```markdown
-![Vista general de la interfaz](docs/screenshots/interfaz-general.png)
-![Chat con el agente](docs/screenshots/chat.png)
-![Reporte EDA en HTML](docs/screenshots/reporte-eda.png)
-```
+**Chat con el agente**
+ 
+<img width="1852" height="926" alt="Chat con el agente" src="https://github.com/user-attachments/assets/9f72bbd2-8a70-4b27-9bc9-59ce24a056ae" />
+
+**Pidiendo un reporte html al agente**
+ 
+<img width="1416" height="653" alt="Reporte EDA en HTML" src="https://github.com/user-attachments/assets/dab65656-a471-4fe7-a939-cf0e90af32c5" />
+
+**Reporte EDA en HTML**
+
+<img width="1849" height="912" alt="Vista adicional" src="https://github.com/user-attachments/assets/115de2cd-9727-4476-a204-9a37934307ab" />
+ 
 ---
 
 ## Licencia
