@@ -2,6 +2,13 @@
 
 La interfaz web utiliza **Docker** para levantar el entorno de desarrollo de manera controlada y reproducible. La aplicación está construida con **React** y **Next.js**, y utiliza **pnpm** para la instalación de dependencias.
 
+---
+<div align="center">
+
+[English Version](README.en.md)
+
+</div>
+
 ### 1. Instalar dependencias
 
 Primero, se deben instalar las dependencias del frontend mediante el siguiente comando:
