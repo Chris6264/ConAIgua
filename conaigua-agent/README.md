@@ -148,7 +148,7 @@ Adicionalmente, para visualizar los reportes EDA generados en formato HTML, se p
 
 ```bash
 cd reports/eda 
-python -m http.server 8080
+python -m http.server 8088
 ```
 
 Presiona `Ctrl + C` para terminar la sesión.
