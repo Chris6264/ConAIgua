@@ -1,5 +1,5 @@
 services:
-  web:
+  frontend:
     image: node:22-bookworm
     container_name: next-web
     working_dir: /app
