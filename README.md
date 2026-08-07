@@ -173,9 +173,15 @@ El sistema se levanta en dos partes:
  
 <img width="1852" height="926" alt="Chat con el agente" src="https://github.com/user-attachments/assets/9f72bbd2-8a70-4b27-9bc9-59ce24a056ae" />
 
+<img width="869" height="358" alt="image" src="https://github.com/user-attachments/assets/e12073a7-64ea-4288-a99f-fa231fbffe00" />
+
+<img width="869" height="358" alt="image" src="https://github.com/user-attachments/assets/e1e97fdd-34b0-4ad9-a53c-1bfd93495a10" />
+
 **Pidiendo un reporte html al agente**
  
 <img width="1416" height="653" alt="Reporte EDA en HTML" src="https://github.com/user-attachments/assets/dab65656-a471-4fe7-a939-cf0e90af32c5" />
+
+<img width="869" height="358" alt="image" src="https://github.com/user-attachments/assets/fdd941e2-7e00-45a1-b59b-3063e071d3da" />
 
 **Reporte EDA en HTML**
 
