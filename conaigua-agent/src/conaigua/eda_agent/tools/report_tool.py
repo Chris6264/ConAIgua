@@ -1,17 +1,15 @@
-import unicodedata
 from pathlib import Path
 
-import pandas as pd
 from langchain_core.tools import tool
 
 from conaigua.eda_reports_generator.html_generator import generate_station_html_report
 from conaigua.eda_reports_generator.markdown_generator import generate_station_markdown_report
 from conaigua.eda_engine.data_loader import load_dataset
+from conaigua.eda_engine.estacion_resolver import resolve_estacion_id
 
 
 REPORTS_DIR = Path("reports")
 REPORTS_BASE_URL = "http://localhost:8088"
-NOMBRE_COL = "nombre_estacion"
 
 
 def build_report_url(report_path: Path) -> str:
@@ -19,46 +17,6 @@ def build_report_url(report_path: Path) -> str:
     report_path = report_path.resolve()
     relative_path = report_path.relative_to(reports_root)
     return f"{REPORTS_BASE_URL}/{relative_path.as_posix()}"
-
-
-def _normalize(text: str) -> str:
-    text = str(text).strip().upper()
-    text = unicodedata.normalize("NFKD", text)
-    text = "".join(ch for ch in text if not unicodedata.combining(ch))
-    return " ".join(text.split())
-
-
-def resolve_estacion_id(df: pd.DataFrame, query: str) -> tuple[str | None, list[str]]:
-    query_norm = _normalize(query)
-
-    ids = df["estacion_id"].astype(str)
-    if query.strip() in ids.values:
-        return query.strip(), []
-
-    if NOMBRE_COL not in df.columns:
-        return None, []
-
-    nombres_norm = df[NOMBRE_COL].astype(str).map(_normalize)
-
-    exact_matches = df.loc[nombres_norm == query_norm, "estacion_id"].astype(str).unique()
-    if len(exact_matches) == 1:
-        return exact_matches[0], []
-    if len(exact_matches) > 1:
-        return None, list(exact_matches)
-
-    partial_mask = nombres_norm.str.contains(query_norm, na=False)
-    partial_matches = df.loc[partial_mask, ["estacion_id", NOMBRE_COL]].drop_duplicates()
-
-    if len(partial_matches) == 1:
-        return str(partial_matches.iloc[0]["estacion_id"]), []
-    if len(partial_matches) > 1:
-        candidatos = [
-            f"{row['estacion_id']} ({row[NOMBRE_COL]})"
-            for _, row in partial_matches.iterrows()
-        ]
-        return None, candidatos
-
-    return None, []
 
 
 @tool
@@ -73,10 +31,6 @@ def report_tool(estacion_id: str, formato: str = "html") -> str:
     Formatos disponibles:
     - html
     - markdown
-
-    Si el usuario no especifica formato, usa html.
-    Si el usuario pide markdown, lee el archivo .md y devuelve su contenido
-    para que el agente lo muestre en la respuesta final.
     """
     df = load_dataset()
 
