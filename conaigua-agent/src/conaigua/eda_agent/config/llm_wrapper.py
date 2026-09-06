@@ -37,6 +37,18 @@ def load_config() -> dict:
     return config
 
 
+def resolve_env_value(value: str) -> str:
+    """
+    Si 'value' coincide con el nombre de una variable de entorno definida
+    en .env (ej. 'LLM_PROVIDER', 'GROQ_MODEL'), devuelve su valor real.
+    Si no hay ninguna variable con ese nombre, devuelve el valor tal cual
+    (por si en config.yaml ya se puso el valor literal, ej. 'groq').
+    """
+    if isinstance(value, str) and value in os.environ:
+        return os.environ[value]
+    return value
+
+
 def get_api_key(api_key_env: str) -> str:
     """
     Recibe el nombre de la variable de entorno, por ejemplo GROQ_API_KEY,
@@ -57,8 +69,8 @@ def build_llm():
     config = load_config()
     llm_config = config["llm"]
 
-    provider = llm_config["provider"].lower()
-    model = llm_config["model"]
+    provider = resolve_env_value(llm_config["provider"]).lower()
+    model = resolve_env_value(llm_config["model"])
     api_key_env = llm_config["api_key_env"]
     temperature = llm_config.get("temperature", 0)
     max_tokens = llm_config.get("max_tokens", 1024)
