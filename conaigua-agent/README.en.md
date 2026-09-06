@@ -148,7 +148,7 @@ PYTHONPATH="$PWD/src" uv run langgraph dev
 Additionally, to view the generated EDA reports in HTML format, you can start a local server from the reports folder using the following commands:
 
 ```bash
-cd reports/eda 
+cd reports
 python -m http.server 8088
 ```
 
